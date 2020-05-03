@@ -1,0 +1,3 @@
+[submodule "FoxxoEngine/vendor/spdlog"]
+	path = FoxxoEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog
