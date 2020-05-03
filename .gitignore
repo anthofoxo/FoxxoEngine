@@ -1,5 +1,9 @@
-# Visual Studio Specifics
 /bin/
 /bin-int/
+
+# Visual Studio
 /.vs/
 *.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
