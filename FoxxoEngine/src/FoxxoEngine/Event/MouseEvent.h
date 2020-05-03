@@ -21,7 +21,7 @@ namespace FoxxoEngine
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseMovedEvent);
+		EVENT_CLASS_TYPE(MouseMoved);
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 	private:
 		float m_mouseX, m_mouseY;
@@ -44,7 +44,7 @@ namespace FoxxoEngine
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseScrolledEvent);
+		EVENT_CLASS_TYPE(MouseScrolled);
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 	private:
 		float m_xOffset, m_yOffset;
