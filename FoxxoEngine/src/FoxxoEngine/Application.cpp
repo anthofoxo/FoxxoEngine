@@ -1,5 +1,8 @@
 #include "Application.h"
 
+#include "FoxxoEngine/Event/ApplicationEvent.h"
+#include "FoxxoEngine/Log.h"
+
 namespace FoxxoEngine
 {
 	Application::Application()
@@ -14,6 +17,9 @@ namespace FoxxoEngine
 
 	void Application::run()
 	{
+		WindowResizeEvent e(1280, 720);
+		FOXE_TRACE(e);
+
 		while (true);
 	}
 }
