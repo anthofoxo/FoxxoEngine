@@ -4,3 +4,6 @@
 [submodule "FoxxoEngine/vendor/GLFW"]
 	path = FoxxoEngine/vendor/GLFW
 	url = https://github.com/TheCherno/GLFW
+[submodule "FoxxoEngine/vendor/imgui"]
+	path = FoxxoEngine/vendor/imgui
+	url = https://github.com/TheCherno/imgui
