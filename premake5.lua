@@ -14,9 +14,11 @@ outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "FoxxoEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "FoxxoEngine/vendor/Glad/include"
+IncludeDir["imgui"] = "FoxxoEngine/vendor/imgui"
 
 include "FoxxoEngine/vendor/GLFW"
 include "FoxxoEngine/vendor/Glad"
+include "FoxxoEngine/vendor/imgui"
 
 project "FoxxoEngine"
     location "FoxxoEngine"
@@ -40,13 +42,15 @@ project "FoxxoEngine"
 		"%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
-        "%{IncludeDir.Glad}"
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.imgui}"
     }
 
 	links
 	{
 		"GLFW",
         "Glad",
+        "imgui",
 		"opengl32.lib"
 	}
 
