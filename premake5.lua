@@ -54,7 +54,7 @@ project "FoxxoEngine"
         defines
         {
             "FOXE_PLATFORM_WINDOWS",
-            "FOXE_DLL"
+            "FOXE_DLL",
         }
 
         postbuildcommands
@@ -63,7 +63,11 @@ project "FoxxoEngine"
         }
 
     filter "configurations:Debug"
-        defines "FOXE_DEBUG"
+        defines
+		{
+			"FOXE_DEBUG",
+			"FOXE_ENABLE_ASSERTS"
+		}
         symbols "On"
     
     filter "configurations:Release"
