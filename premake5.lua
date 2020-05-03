@@ -13,8 +13,10 @@ outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 -- Include directories relative to root folder
 IncludeDir = {}
 IncludeDir["GLFW"] = "FoxxoEngine/vendor/GLFW/include"
+IncludeDir["Glad"] = "FoxxoEngine/vendor/Glad/include"
 
 include "FoxxoEngine/vendor/GLFW"
+include "FoxxoEngine/vendor/Glad"
 
 project "FoxxoEngine"
     location "FoxxoEngine"
@@ -37,12 +39,14 @@ project "FoxxoEngine"
     {
 		"%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}"
     }
 
 	links
 	{
 		"GLFW",
+        "Glad",
 		"opengl32.lib"
 	}
 
@@ -55,6 +59,7 @@ project "FoxxoEngine"
         {
             "FOXE_PLATFORM_WINDOWS",
             "FOXE_DLL",
+            "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands

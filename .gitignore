@@ -7,3 +7,11 @@
 *.sln
 *.vcxproj
 *.vcxproj.filters
+*.log
+*.tlog
+*.obj
+*.pdb
+*.lib
+
+// Glad
+*FileListAbsolute.txt

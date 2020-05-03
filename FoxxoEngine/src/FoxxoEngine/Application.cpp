@@ -4,7 +4,7 @@
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace FoxxoEngine
 {
