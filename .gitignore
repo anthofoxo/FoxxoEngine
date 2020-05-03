@@ -1,9 +1,10 @@
 # Visual Studio Specifics
+bin/
 /.vs/
-/FoxxoEngine.sln
-/FoxxoEngine.vcxproj
-/FoxxoEngine.vcxproj.filters
-/FoxxoEngine.vcxproj.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
 
 # Prerequisites
 *.d
