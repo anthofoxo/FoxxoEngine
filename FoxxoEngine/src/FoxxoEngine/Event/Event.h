@@ -43,7 +43,6 @@ namespace FoxxoEngine
 			return getCategoryFlags() & category;
 		}
 
-	protected:
 		bool m_handled = false;
 	};
 
@@ -72,7 +71,7 @@ namespace FoxxoEngine
 		Event &m_event;
 	};
 
-	inline std::ostream &operator<<(std::ostream &os, const Event &e)
+	inline std::ostream& operator<<(std::ostream &os, const Event &e)
 	{
 		return os << e.toString();
 	}

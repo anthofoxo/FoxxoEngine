@@ -20,6 +20,16 @@ namespace FoxxoEngine
 	{
 	}
 
+	void Application::pushLayer(Layer *layer)
+	{
+		m_layerStack.pushLayer(layer);
+	}
+
+	void Application::pushOverlay(Layer *overlay)
+	{
+		m_layerStack.pushOverlay(overlay);
+	}
+
 	bool Application::onWindowClose(WindowCloseEvent &e)
 	{
 		m_running = false;
@@ -32,6 +42,13 @@ namespace FoxxoEngine
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
 		FOXE_CORE_TRACE("{0}", e);
+
+		for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
+		{
+			(*--it)->onEvent(e);
+			if (e.m_handled)
+				break;
+		}
 	}
 
 	void Application::run()
@@ -41,6 +58,9 @@ namespace FoxxoEngine
 			// THIS IS BAD DONT DO THIS
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			for (Layer *layer : m_layerStack)
+				layer->onUpdate();
 
 			m_window->onUpdate();
 		}

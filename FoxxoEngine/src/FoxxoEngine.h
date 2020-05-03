@@ -4,6 +4,7 @@
 
 #include "FoxxoEngine/Core.h"
 #include "FoxxoEngine/Application.h"
+#include "FoxxoEngine/Layer.h"
 #include "FoxxoEngine/Log.h"
 
 // --- ENTRY POINT ---
