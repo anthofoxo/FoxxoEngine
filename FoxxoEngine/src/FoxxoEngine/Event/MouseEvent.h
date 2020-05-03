@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace FoxxoEngine
 {
 	class FOXE_API MouseMovedEvent : public Event

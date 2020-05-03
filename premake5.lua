@@ -18,6 +18,9 @@ project "FoxxoEngine"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "foxepch.h"
+    pchsource "FoxxoEngine/src/foxepch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",

@@ -2,9 +2,6 @@
 
 #include "FoxxoEngine/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace FoxxoEngine
 {
 	enum class EventType

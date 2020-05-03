@@ -1,3 +1,4 @@
+#include "foxepch.h"
 #include "Application.h"
 
 #include "FoxxoEngine/Event/ApplicationEvent.h"
