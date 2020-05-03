@@ -2,25 +2,29 @@
 #include "Application.h"
 
 #include "FoxxoEngine/Event/ApplicationEvent.h"
-#include "FoxxoEngine/Log.h"
+
+#include <GLFW/glfw3.h>
 
 namespace FoxxoEngine
 {
 	Application::Application()
 	{
-
+		m_window = std::unique_ptr<Window>(Window::create());
 	}
 
 	Application::~Application()
 	{
-
 	}
 
 	void Application::run()
 	{
-		WindowResizeEvent e(1280, 720);
-		FOXE_TRACE(e);
+		while (m_running)
+		{
+			// THIS IS BAD DONT DO THIS
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
 
-		while (true);
+			m_window->onUpdate();
+		}
 	}
 }

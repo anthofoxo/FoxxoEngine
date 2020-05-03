@@ -10,4 +10,12 @@
 	#error FoxxoEngine only supports Windows!
 #endif
 
+#ifdef FOXE_ENABLE_ASSERTS
+	#define FOXE_ASSERT(x, ...) { if(!(x)) { FOXE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define FOXE_CORE_ASSERT(x, ...) { if(!(x)) { FOXE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#else
+	#define FOXE_ASSERT(x, ...)
+	#define FOXE_CORE_ASSERT(x, ...)
+#endif
+
 #define BIT(x) (1 << x)

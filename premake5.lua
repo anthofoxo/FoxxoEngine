@@ -10,6 +10,12 @@ workspace "FoxxoEngine"
 
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
+-- Include directories relative to root folder
+IncludeDir = {}
+IncludeDir["GLFW"] = "FoxxoEngine/vendor/GLFW/include"
+
+include "FoxxoEngine/vendor/GLFW"
+
 project "FoxxoEngine"
     location "FoxxoEngine"
     kind "SharedLib"
@@ -30,8 +36,15 @@ project "FoxxoEngine"
     includedirs
     {
 		"%{prj.name}/src",
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
     }
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
+	}
 
     filter "system:windows"
         cppdialect "C++17"
@@ -97,7 +110,11 @@ project "Sandbox"
             }
     
         filter "configurations:Debug"
-            defines "FOXE_DEBUG"
+            defines
+			{
+				"FOXE_DEBUG",
+				"FOXE_ENABLE_ASSERTS"
+			}
             symbols "On"
         
         filter "configurations:Release"

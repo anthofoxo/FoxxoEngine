@@ -1,3 +1,6 @@
 [submodule "FoxxoEngine/vendor/spdlog"]
 	path = FoxxoEngine/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "FoxxoEngine/vendor/GLFW"]
+	path = FoxxoEngine/vendor/GLFW
+	url = https://github.com/TheCherno/GLFW
