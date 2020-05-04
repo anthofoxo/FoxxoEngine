@@ -13,6 +13,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "FoxxoEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "FoxxoEngine/vendor/Glad/include"
 IncludeDir["imgui"] = "FoxxoEngine/vendor/imgui"
+IncludeDir["glm"] = "FoxxoEngine/vendor/glm"
 
 group "Dependencies"
     include "FoxxoEngine/vendor/GLFW"
@@ -35,7 +36,9 @@ project "FoxxoEngine"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs
@@ -44,7 +47,8 @@ project "FoxxoEngine"
         "%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.imgui}"
+        "%{IncludeDir.imgui}",
+        "%{IncludeDir.glm}"
     }
 
 	links
@@ -104,7 +108,8 @@ project "Sandbox"
         includedirs
         {
             "FoxxoEngine/vendor/spdlog/include",
-            "FoxxoEngine/src"
+            "FoxxoEngine/src",
+            "%{IncludeDir.glm}"
         }
 
         links "FoxxoEngine"

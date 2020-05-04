@@ -7,3 +7,6 @@
 [submodule "FoxxoEngine/vendor/imgui"]
 	path = FoxxoEngine/vendor/imgui
 	url = https://github.com/TheCherno/imgui
+[submodule "FoxxoEngine/vendor/glm"]
+	path = FoxxoEngine/vendor/glm
+	url = https://github.com/g-truc/glm/
