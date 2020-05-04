@@ -8,6 +8,8 @@ workspace "FoxxoEngine"
         "Dist"
     }
 
+    startproject "Sandbox"
+
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
 -- Include directories relative to root folder
@@ -16,14 +18,17 @@ IncludeDir["GLFW"] = "FoxxoEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "FoxxoEngine/vendor/Glad/include"
 IncludeDir["imgui"] = "FoxxoEngine/vendor/imgui"
 
-include "FoxxoEngine/vendor/GLFW"
-include "FoxxoEngine/vendor/Glad"
-include "FoxxoEngine/vendor/imgui"
+group "Dependencies"
+    include "FoxxoEngine/vendor/GLFW"
+    include "FoxxoEngine/vendor/Glad"
+    include "FoxxoEngine/vendor/imgui"
+group ""
 
 project "FoxxoEngine"
     location "FoxxoEngine"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -68,32 +73,29 @@ project "FoxxoEngine"
 
         postbuildcommands
         {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
         }
 
     filter "configurations:Debug"
-        defines
-		{
-			"FOXE_DEBUG",
-			"FOXE_ENABLE_ASSERTS"
-		}
-        buildoptions "/MDd"
+        defines "FOXE_DEBUG"
+        runtime "Debug"
         symbols "On"
     
     filter "configurations:Release"
         defines "FOXE_RELEASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
     
     filter "configurations:Dist"
         defines "FOXE_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
 
 project "Sandbox"
         location "Sandbox"
         kind "ConsoleApp"
         language "C++"
+        staticruntime "off"
     
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -117,7 +119,6 @@ project "Sandbox"
     
         filter "system:windows"
             cppdialect "C++17"
-            staticruntime "On"
             systemversion "latest"
     
             defines
@@ -131,15 +132,15 @@ project "Sandbox"
 				"FOXE_DEBUG",
 				"FOXE_ENABLE_ASSERTS"
 			}
-            buildoptions "/MDd"
+            runtime "Debug"
             symbols "On"
         
         filter "configurations:Release"
             defines "FOXE_RELEASE"
-            buildoptions "/MD"
+            runtime "Release"
             optimize "On"
         
         filter "configurations:Dist"
             defines "FOXE_DIST"
-            buildoptions "/MD"
+            runtime "Release"
             optimize "On"

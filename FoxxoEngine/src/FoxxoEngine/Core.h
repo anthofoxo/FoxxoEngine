@@ -10,6 +10,10 @@
 	#error FoxxoEngine only supports Windows!
 #endif
 
+#ifdef FOXE_DEBUG
+	#define FOXE_ENABLE_ASSERTS
+#endif
+
 #ifdef FOXE_ENABLE_ASSERTS
 	#define FOXE_ASSERT(x, ...) { if(!(x)) { FOXE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define FOXE_CORE_ASSERT(x, ...) { if(!(x)) { FOXE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
