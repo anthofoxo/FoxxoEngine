@@ -24,7 +24,7 @@ project "FoxxoEngine"
     location "FoxxoEngine"
     kind "SharedLib"
     language "C++"
-    staticruntime "off"
+    staticruntime "Off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -90,7 +90,7 @@ project "Sandbox"
         location "Sandbox"
         kind "ConsoleApp"
         language "C++"
-        staticruntime "off"
+        staticruntime "Off"
     
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -107,26 +107,15 @@ project "Sandbox"
             "FoxxoEngine/src"
         }
 
-        links
-        {
-            "FoxxoEngine"
-        }
-    
+        links "FoxxoEngine"
+
         filter "system:windows"
             cppdialect "C++17"
             systemversion "latest"
-    
-            defines
-            {
-                "FOXE_PLATFORM_WINDOWS"
-            }
+            defines "FOXE_PLATFORM_WINDOWS"
     
         filter "configurations:Debug"
-            defines
-			{
-				"FOXE_DEBUG",
-				"FOXE_ENABLE_ASSERTS"
-			}
+            defines "FOXE_DEBUG"
             runtime "Debug"
             symbols "On"
         
