@@ -13,5 +13,9 @@
 *.pdb
 *.lib
 
-// Glad
+# Glad
 *FileListAbsolute.txt
+
+# Imgui
+imgui.ini
+imgui_log.txt

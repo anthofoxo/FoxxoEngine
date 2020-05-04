@@ -52,6 +52,7 @@ namespace FoxxoEngine
 
 	class FOXE_API MouseButtonEvent : public Event
 	{
+	public:
 		inline int getMouseButton() const { return m_button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
