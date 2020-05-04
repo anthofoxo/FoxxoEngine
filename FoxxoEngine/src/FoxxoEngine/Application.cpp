@@ -3,6 +3,7 @@
 
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"
+#include "Input.h"
 
 #include <glad/glad.h>
 
@@ -68,6 +69,9 @@ namespace FoxxoEngine
 
 			for (Layer *layer : m_layerStack)
 				layer->onUpdate();
+
+			auto [x, y] = Input::getMousePos();
+			FOXE_CORE_TRACE("{0}, {1}", x, y);
 
 			m_window->onUpdate();
 		}

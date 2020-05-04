@@ -5,6 +5,7 @@
 #include "FoxxoEngine/Event/ApplicationEvent.h"
 #include "FoxxoEngine/Event/KeyEvent.h"
 #include "FoxxoEngine/Event/MouseEvent.h"
+#include "WindowsInput.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
@@ -53,6 +54,9 @@ namespace FoxxoEngine
 		}
 
 		m_window = glfwCreateWindow((int) props.m_width, (int) props.m_height, m_data.m_title.c_str(), nullptr, nullptr);
+
+		FOXE_CORE_ASSERT(m_window, "Failed to create window!")
+
 		glfwMakeContextCurrent(m_window);
 
 		int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);

@@ -2,11 +2,7 @@ workspace "FoxxoEngine"
     architecture "x64"
 
     configurations
-    {
-        "Debug",
-        "Release",
-        "Dist"
-    }
+    { "Debug", "Release", "Dist" }
 
     startproject "Sandbox"
 
@@ -61,7 +57,6 @@ project "FoxxoEngine"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
 
         defines
