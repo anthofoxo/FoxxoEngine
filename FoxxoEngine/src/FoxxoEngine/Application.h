@@ -5,6 +5,7 @@
 #include "FoxxoEngine/LayerStack.h"
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"
+#include "FoxxoEngine/ImGui/ImGuiLayer.h"
 
 namespace FoxxoEngine
 {
@@ -27,6 +28,7 @@ namespace FoxxoEngine
 		bool onWindowClose(WindowCloseEvent &e);
 
 		std::unique_ptr<Window> m_window;
+		ImGuiLayer *m_imGuiLayer;
 		bool m_running = true;
 		LayerStack m_layerStack;
 	private:

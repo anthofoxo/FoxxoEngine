@@ -13,20 +13,12 @@ namespace FoxxoEngine
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void onAttach();
-		void onDetach();
+		virtual void onAttach() override;
+		virtual void onDetach() override;
+		virtual void onImGuiRender() override;
 
-		void onUpdate();
-		void onEvent(Event &e);
-	private:
-		bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-		bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent &e);
-		bool onMouseMoveEvent(MouseMovedEvent &e);
-		bool onMouseScrollEvent(MouseScrolledEvent &e);
-		bool onKeyPressEvent(KeyPressedEvent &e);
-		bool onKeyReleaseEvent(KeyReleasedEvent &e);
-		bool onKeyTypedEvent(KeyTypedEvent &e);
-		bool onWindowResize(WindowResizeEvent &e);
+		void begin();
+		void end();
 	private:
 		float m_time = 0.0f;
 	};

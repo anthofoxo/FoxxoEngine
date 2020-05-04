@@ -109,6 +109,7 @@ project "Sandbox"
         {
             "FoxxoEngine/vendor/spdlog/include",
             "FoxxoEngine/src",
+            "FoxxoEngine/vendor",
             "%{IncludeDir.glm}"
         }
 
