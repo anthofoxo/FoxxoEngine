@@ -4,7 +4,7 @@
 
 namespace FoxxoEngine
 {
-	class FOXE_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -27,7 +27,7 @@ namespace FoxxoEngine
 		float m_mouseX, m_mouseY;
 	};
 
-	class FOXE_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float xOffset, float yOffset)
@@ -50,7 +50,7 @@ namespace FoxxoEngine
 		float m_xOffset, m_yOffset;
 	};
 
-	class FOXE_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		inline int getMouseButton() const { return m_button; }
@@ -64,7 +64,7 @@ namespace FoxxoEngine
 		int m_button;
 	};
 
-	class FOXE_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -81,7 +81,7 @@ namespace FoxxoEngine
 		EVENT_CLASS_TYPE(MouseButtonPressed);
 	};
 
-	class FOXE_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)

@@ -6,7 +6,7 @@
 
 namespace FoxxoEngine
 {
-	class FOXE_API LayerStack
+	class LayerStack
 	{
 	public:
 		LayerStack();

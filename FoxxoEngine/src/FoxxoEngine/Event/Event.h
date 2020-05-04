@@ -29,7 +29,7 @@ namespace FoxxoEngine
 
 #define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
 
-	class FOXE_API Event
+	class Event
 	{
 		friend class EventDispatcher;
 	public:

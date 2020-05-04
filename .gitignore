@@ -12,6 +12,7 @@
 *.obj
 *.pdb
 *.lib
+*.idb
 
 # Glad
 *FileListAbsolute.txt

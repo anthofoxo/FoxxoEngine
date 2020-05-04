@@ -4,3 +4,9 @@
 [submodule "FoxxoEngine/vendor/glm"]
 	path = FoxxoEngine/vendor/glm
 	url = https://github.com/g-truc/glm/
+[submodule "FoxxoEngine/vendor/imgui"]
+	path = FoxxoEngine/vendor/imgui
+	url = https://github.com/anthofoxo/imgui
+[submodule "FoxxoEngine/vendor/GLFW"]
+	path = FoxxoEngine/vendor/GLFW
+	url = https://github.com/anthofoxo/glfw

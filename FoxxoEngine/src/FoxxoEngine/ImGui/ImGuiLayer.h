@@ -7,7 +7,7 @@
 
 namespace FoxxoEngine
 {
-	class FOXE_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();

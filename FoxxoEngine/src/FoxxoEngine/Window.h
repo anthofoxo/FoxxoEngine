@@ -19,7 +19,7 @@ namespace FoxxoEngine
 	};
 
 	// Interface representing a desktop system based window
-	class FOXE_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event &)>;

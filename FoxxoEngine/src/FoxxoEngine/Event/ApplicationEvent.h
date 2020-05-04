@@ -4,7 +4,7 @@
 
 namespace FoxxoEngine
 {
-	class FOXE_API WindowResizeEvent : public Event
+	class WindowResizeEvent : public Event
 	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)
@@ -27,7 +27,7 @@ namespace FoxxoEngine
 		unsigned int m_width, m_height;
 	};
 
-	class FOXE_API WindowCloseEvent : public Event
+	class WindowCloseEvent : public Event
 	{
 	public:
 		WindowCloseEvent()
@@ -37,7 +37,7 @@ namespace FoxxoEngine
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	};
 
-	class FOXE_API AppTickEvent : public Event
+	class AppTickEvent : public Event
 	{
 	public:
 		AppTickEvent()
@@ -47,7 +47,7 @@ namespace FoxxoEngine
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	};
 
-	class FOXE_API AppUpdateEvent : public Event
+	class AppUpdateEvent : public Event
 	{
 	public:
 		AppUpdateEvent()
@@ -57,7 +57,7 @@ namespace FoxxoEngine
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	};
 
-	class FOXE_API AppRenderEvent : public Event
+	class AppRenderEvent : public Event
 	{
 	public:
 		AppRenderEvent()

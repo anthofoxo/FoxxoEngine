@@ -4,7 +4,7 @@
 
 namespace FoxxoEngine
 {
-	class FOXE_API Input
+	class Input
 	{
 	public:
 		inline static bool isKeyPressed(int keycode) { return s_instance->isKeyPressedImpl(keycode); }

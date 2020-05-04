@@ -9,7 +9,7 @@
 
 namespace FoxxoEngine
 {
-	class FOXE_API Application
+	class Application
 	{
 	public:
 		Application();
