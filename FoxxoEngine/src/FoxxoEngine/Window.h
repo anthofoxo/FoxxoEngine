@@ -1,5 +1,4 @@
 #pragma once
-
 #include "foxepch.h"
 
 #include "FoxxoEngine/Core.h"
@@ -9,36 +8,30 @@ namespace FoxxoEngine
 {
 	struct WindowProps
 	{
-		std::string m_title;
-		unsigned int m_width, m_height;
+		std::string m_Title;
+		unsigned int m_Width, m_Height;
 
-		WindowProps(const std::string &title = "FoxxoEngine", unsigned int width = 1280, unsigned int height = 720)
-			: m_title(title), m_width(width), m_height(height)
-		{
-		}
+		WindowProps(const std::string& title = "FoxxoEngine", unsigned int width = 1280u, unsigned int height = 720u)
+			: m_Title(title), m_Width(width), m_Height(height) {}
 	};
 
-	// Interface representing a desktop system based window
-	class Window
+	struct Window
 	{
-	public:
-		using EventCallbackFn = std::function<void(Event &)>;
+		using EventCallbackFn = std::function<void(Event&)>;
 
-		virtual ~Window()
-		{};
+		virtual ~Window() {}
 
-		virtual void onUpdate() = 0;
+		virtual void OnUpdate() = 0;
 
-		virtual unsigned int getWidth() const = 0;
-		virtual unsigned int getHeight() const = 0;
+		virtual unsigned int GetWidth() const = 0;
+		virtual unsigned int GetHeight() const = 0;
 
-		// attributes
-		virtual void setEventCallback(const EventCallbackFn &callback) = 0;
-		virtual void setVSync(bool enabled) = 0;
-		virtual bool isVSync() const = 0;
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+		virtual void SetVSync(bool enabled) = 0;
+		virtual bool IsVSync() const = 0;
 
-		virtual void* getNativeWindow() const = 0;
+		virtual void* GetHandle() const = 0;
 
-		static Window* create(const WindowProps &props = WindowProps());
+		static Window* Create(const WindowProps& props = WindowProps());
 	};
 }

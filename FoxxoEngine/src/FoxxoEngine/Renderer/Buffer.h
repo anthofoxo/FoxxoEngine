@@ -57,61 +57,40 @@ namespace FoxxoEngine
 
 	struct BufferElement
 	{
-		std::string Name;
-		ShaderDataType Type;
-		uint32_t Size;
-		uint32_t Offset;
-		bool Normalized;
+		std::string m_Name;
+		ShaderDataType m_Type;
+		uint32_t m_Size;
+		uint32_t m_Offset;
+		bool m_Normalized;
 
-		BufferElement(ShaderDataType type, const std::string &name, bool normalized = false)
-			: Type(type), Name(name), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
-		{
-		};
-
+		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
+			: m_Type(type), m_Name(name), m_Size(ShaderDataTypeSize(type)), m_Offset(0), m_Normalized(normalized){}
 	};
 
 	struct BufferLayout
 	{
+		std::vector<BufferElement> m_Elements;
+		uint32_t m_Stride;
+
 		BufferLayout() {}
+		BufferLayout(const std::initializer_list<BufferElement>& elements);
 
-		BufferLayout(const std::initializer_list<BufferElement> &elements)
-			: m_elements(elements)
-		{
-			CalculateOffsetsAndStride();
-		}
-
-		void CalculateOffsetsAndStride()
-		{
-			uint32_t offset = 0;
-			m_stride = 0;
-
-			for (auto &element : m_elements)
-			{
-				element.Offset = offset;
-				offset += element.Size;
-				m_stride += element.Size;
-			}
-		}
-
-		std::vector<BufferElement>::iterator begin() { return m_elements.begin(); }
-		std::vector<BufferElement>::iterator end() { return m_elements.end(); }
-		std::vector<BufferElement>::const_iterator begin() const { return m_elements.begin(); }
-		std::vector<BufferElement>::const_iterator end() const { return m_elements.end(); }
-
-		std::vector<BufferElement> m_elements;
-		uint32_t m_stride = 0;
+		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
+		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
+		std::vector<BufferElement>::const_iterator begin() const { return m_Elements.begin(); }
+		std::vector<BufferElement>::const_iterator end() const { return m_Elements.end(); }
 	};
 
 	struct Buffer
 	{
 		virtual ~Buffer() {}
 
-		virtual void bind() const = 0;
-		virtual void unbind() const = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
 		virtual const BufferLayout& GetLayout() const = 0;
-		virtual void SetLayout(const BufferLayout &layout) = 0;
+		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static Buffer *create(uint32_t type, uint32_t drawMode, void *data, size_t size);
+		static Buffer* Create(uint32_t type, uint32_t drawMode, void* data, size_t size);
 	};
 }

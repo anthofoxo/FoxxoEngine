@@ -4,10 +4,7 @@
 namespace FoxxoEngine
 {
 	Layer::Layer(const std::string &name)
-		: m_debugName(name)
-	{
-	}
-	Layer::~Layer()
-	{
-	}
+		: m_DebugName(name) {}
+
+	Layer::~Layer() {}
 }

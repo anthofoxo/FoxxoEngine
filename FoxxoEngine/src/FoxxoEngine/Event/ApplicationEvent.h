@@ -6,32 +6,31 @@ namespace FoxxoEngine
 {
 	class WindowResizeEvent : public Event
 	{
+	private:
+		unsigned int m_Width, m_Height;
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)
-			: m_width(width), m_height(height)
+			: m_Width(width), m_Height(height)
 		{}
 
-		inline unsigned int getWidth() const { return m_width; }
-		inline unsigned int getHeight() const { return m_height; }
+		inline unsigned int GetWidth() const { return m_Width; }
+		inline unsigned int GetHeight() const { return m_Height; }
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "WindowResizeEvent: " << m_width << ", " << m_height;
+			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(WindowResize);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
-	private:
-		unsigned int m_width, m_height;
 	};
 
 	class WindowCloseEvent : public Event
 	{
 	public:
-		WindowCloseEvent()
-		{}
+		WindowCloseEvent() {}
 
 		EVENT_CLASS_TYPE(WindowClose);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
@@ -40,8 +39,7 @@ namespace FoxxoEngine
 	class AppTickEvent : public Event
 	{
 	public:
-		AppTickEvent()
-		{}
+		AppTickEvent() {}
 
 		EVENT_CLASS_TYPE(AppTick);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
@@ -50,8 +48,7 @@ namespace FoxxoEngine
 	class AppUpdateEvent : public Event
 	{
 	public:
-		AppUpdateEvent()
-		{}
+		AppUpdateEvent() {}
 
 		EVENT_CLASS_TYPE(AppUpdate);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
@@ -60,8 +57,7 @@ namespace FoxxoEngine
 	class AppRenderEvent : public Event
 	{
 	public:
-		AppRenderEvent()
-		{}
+		AppRenderEvent() {}
 
 		EVENT_CLASS_TYPE(AppRender);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);

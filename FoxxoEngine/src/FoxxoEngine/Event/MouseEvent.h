@@ -6,75 +6,73 @@ namespace FoxxoEngine
 {
 	class MouseMovedEvent : public Event
 	{
+	private:
+		float m_MouseX, m_MouseY;
 	public:
 		MouseMovedEvent(float x, float y)
-			: m_mouseX(x), m_mouseY(y)
+			: m_MouseX(x), m_MouseY(y)
 		{}
 
-		inline float getX() const { return m_mouseX; }
-		inline float getY() const { return m_mouseY; }
+		inline float GetX() const { return m_MouseX; }
+		inline float GetY() const { return m_MouseY; }
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseMovedEvent: " << m_mouseX << ", " << m_mouseY;
+			ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(MouseMoved);
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
-	private:
-		float m_mouseX, m_mouseY;
 	};
 
 	class MouseScrolledEvent : public Event
 	{
+	private:
+		float m_XOffset, m_YOffset;
 	public:
 		MouseScrolledEvent(float xOffset, float yOffset)
-			: m_xOffset(xOffset), m_yOffset(yOffset)
+			: m_XOffset(xOffset), m_YOffset(yOffset)
 		{}
 
-		inline float getXOffset() const { return m_xOffset; }
-		inline float getYOffset() const { return m_yOffset; }
+		inline float getXOffset() const { return m_XOffset; }
+		inline float getYOffset() const { return m_YOffset; }
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseScrolledEvent: " << m_xOffset << ", " << m_yOffset;
+			ss << "MouseScrolledEvent: " << m_XOffset << ", " << m_YOffset;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(MouseScrolled);
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
-	private:
-		float m_xOffset, m_yOffset;
 	};
 
 	class MouseButtonEvent : public Event
 	{
+	protected:
+		int m_Button;
 	public:
-		inline int getMouseButton() const { return m_button; }
+		inline int GetMouseButton() const { return m_Button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 	protected:
 		MouseButtonEvent(int button)
-			: m_button(button)
-		{}
-
-		int m_button;
+			: m_Button(button) {}
 	};
 
 	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
-			: MouseButtonEvent(button)
-		{}
+			: MouseButtonEvent(button) {}
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonPressedEvent: " << m_button;
+			ss << "MouseButtonPressedEvent: " << m_Button;
 			return ss.str();
 		}
 
@@ -85,13 +83,12 @@ namespace FoxxoEngine
 	{
 	public:
 		MouseButtonReleasedEvent(int button)
-			: MouseButtonEvent(button)
-		{}
+			: MouseButtonEvent(button) {}
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonReleasedEvent: " << m_button;
+			ss << "MouseButtonReleasedEvent: " << m_Button;
 			return ss.str();
 		}
 

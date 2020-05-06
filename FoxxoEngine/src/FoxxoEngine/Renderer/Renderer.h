@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace FoxxoEngine
 {
 	namespace RendererConstants
@@ -8,9 +7,8 @@ namespace FoxxoEngine
 		extern uint32_t FOXE_ARRAY_BUFFER;
 		extern uint32_t FOXE_ELEMENT_ARRAY_BUFFER;
 		extern uint32_t FOXE_STATIC_DRAW;
+		extern uint32_t FOXE_TRIANGLES;
 	}
-
-	namespace RC = RendererConstants;
 
 	enum struct RendererAPI
 	{
@@ -19,8 +17,8 @@ namespace FoxxoEngine
 
 	struct Renderer
 	{
-		inline static RendererAPI getAPI() { return api; }
+		inline static RendererAPI GetAPI() { return s_Api; }
 
-		static RendererAPI api;
+		static RendererAPI s_Api;
 	};
 }

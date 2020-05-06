@@ -6,14 +6,12 @@
 
 namespace FoxxoEngine
 {
-	OpenGLContext::OpenGLContext(GLFWwindow *windowHandle)
-		: m_windowHandle(windowHandle)
-	{
-	}
+	OpenGLContext::OpenGLContext(GLFWwindow* window)
+		: m_Window(window) {}
 
-	void OpenGLContext::init()
+	void OpenGLContext::Init()
 	{
-		glfwMakeContextCurrent(m_windowHandle);
+		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 		FOXE_CORE_ASSERT(status, "Failed to initialize Glad!");
 
@@ -22,8 +20,8 @@ namespace FoxxoEngine
 		FOXE_CORE_INFO("GL_VERSION: {0}", glGetString(GL_VERSION));
 	}
 
-	void OpenGLContext::swapBuffers()
+	void OpenGLContext::SwapBuffers()
 	{
-		glfwSwapBuffers(m_windowHandle);
+		glfwSwapBuffers(m_Window);
 	}
 }

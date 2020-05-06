@@ -1,43 +1,37 @@
 #include "foxepch.h"
 #include "ImGuiLayer.h"
 
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+
 #define IMGUI_IMPL_API
 #include "examples/imgui_impl_opengl3.h"
 #include "examples/imgui_impl_glfw.h"
+#include "imgui.h"
 
 #include "FoxxoEngine/Application.h"
-#include "imgui.h"
-#include "GLFW/glfw3.h"
-
-#include <glad/glad.h>
 
 namespace FoxxoEngine
 {
 	ImGuiLayer::ImGuiLayer()
-		: Layer("ImGuiLayer")
-	{
-	}
+		: Layer("ImGuiLayer") {}
 
-	ImGuiLayer::~ImGuiLayer()
-	{
+	ImGuiLayer::~ImGuiLayer() {}
 
-	}
-
-	void ImGuiLayer::onAttach()
+	void ImGuiLayer::OnAttach()
 	{
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO &io = ImGui::GetIO(); (void) io;
+
+		ImGuiIO& io = ImGui::GetIO(); (void) io;
+
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
-		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
 		ImGui::StyleColorsDark();
 
-		ImGuiStyle &style = ImGui::GetStyle();
+		ImGuiStyle& style = ImGui::GetStyle();
 
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
@@ -45,45 +39,45 @@ namespace FoxxoEngine
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
-		Application &app = Application::get();
-		GLFWwindow *window = static_cast<GLFWwindow*>(app.getWindow().getNativeWindow());
+		Application& app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetHandle());
 
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	void ImGuiLayer::onDetach()
+	void ImGuiLayer::OnDetach()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::begin()
+	void ImGuiLayer::Begin()
 	{
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 	}
 
-	void ImGuiLayer::onImGuiRender()
+	void ImGuiLayer::OnGuiRender()
 	{
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
 	}
 
-	void ImGuiLayer::end()
+	void ImGuiLayer::End()
 	{
-		ImGuiIO &io = ImGui::GetIO();
-		Application &app = Application::get();
-		io.DisplaySize = ImVec2((float) app.getWindow().getWidth(), (float) app.getWindow().getHeight());
+		ImGuiIO& io = ImGui::GetIO();
+		Application& app = Application::Get();
+		io.DisplaySize = ImVec2((float) app.GetWindow().GetWidth(), (float) app.GetWindow().GetHeight());
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
-			GLFWwindow *backup_context = glfwGetCurrentContext();
+			GLFWwindow* backup_context = glfwGetCurrentContext();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
 			glfwMakeContextCurrent(backup_context);

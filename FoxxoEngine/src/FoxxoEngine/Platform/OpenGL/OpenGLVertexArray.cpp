@@ -29,17 +29,17 @@ namespace FoxxoEngine
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
-		glGenVertexArrays(1, &m_handle);
+		glGenVertexArrays(1, &m_Handle);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		glDeleteVertexArrays(1, &m_handle);
+		glDeleteVertexArrays(1, &m_Handle);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
-		glBindVertexArray(m_handle);
+		glBindVertexArray(m_Handle);
 	}
 
 	void OpenGLVertexArray::Unbind() const
@@ -47,31 +47,31 @@ namespace FoxxoEngine
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<Buffer> &buffer)
+	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<Buffer>& buffer)
 	{
-		FOXE_CORE_ASSERT(buffer->GetLayout().m_elements.size(), "Vertex buffer, no layout specified");
+		FOXE_CORE_ASSERT(buffer->GetLayout().m_Elements.size(), "Vertex buffer, no layout specified");
 
 		Bind();
-		buffer->bind();
+		buffer->Bind();
 
 		uint32_t index = 0;
 		const BufferLayout &layout = buffer->GetLayout();
 		for (const auto &element : layout)
 		{
-			glVertexAttribPointer(index, ShaderDataTypeCount(element.Type), ShaderDataTypeGLType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.m_stride, (const void *) element.Offset);
+			glVertexAttribPointer(index, ShaderDataTypeCount(element.m_Type), ShaderDataTypeGLType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.m_Stride, (const void*) element.m_Offset);
 			glEnableVertexAttribArray(index);
 
 			++index;
 		}
 
-		m_vertexBuffers.push_back(buffer);
+		m_VertexBuffers.push_back(buffer);
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<Buffer> &buffer)
+	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<Buffer>& buffer)
 	{
-		glBindVertexArray(m_handle);
-		buffer->bind();
+		glBindVertexArray(m_Handle);
+		buffer->Bind();
 
-		m_indexBuffer = buffer;
+		m_IndexBuffer = buffer;
 	}
 }

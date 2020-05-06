@@ -1,135 +1,108 @@
 #include "foxepch.h"
 #include "Shader.h"
+
 #include <glad/glad.h>
 
 namespace FoxxoEngine
 {
-	Shader::Shader(const std::string &vertSrc, const std::string &fragSrc)
+	Shader::Shader(const std::string& vertSrc, const std::string& fragSrc)
 	{
-		// Create an empty vertex shader handle
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		GLint status;
+		const char* source;
 
-		// Send the vertex shader source code to GL
-		// Note that std::string's .c_str is NULL character terminated.
-		const GLchar *source = (const GLchar *) vertSrc.c_str();
-		glShaderSource(vertexShader, 1, &source, 0);
+		GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
+		GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-		// Compile the vertex shader
-		glCompileShader(vertexShader);
+		source = vertSrc.c_str();
+		glShaderSource(vertShader, 1, &source, 0);
+		glCompileShader(vertShader);
 
-		GLint isCompiled = 0;
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
+		glGetShaderiv(vertShader, GL_COMPILE_STATUS, &status);
+
+		if (status == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+			glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &maxLength);
 
-			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
-
-			// We don't need the shader anymore.
-			glDeleteShader(vertexShader);
-
+			glGetShaderInfoLog(vertShader, maxLength, &maxLength, &infoLog[0]);
+			
+			glDeleteShader(vertShader);
+			glDeleteShader(fragShader);
 
 			FOXE_CORE_ERROR("{0}", infoLog.data());
-			FOXE_CORE_ASSERT(false, "Shader compilation failure");
+			FOXE_CORE_ASSERT(false, "Vertex shader compilation failure");
 
-			// In this simple program, we'll just leave
 			return;
 		}
 
-		// Create an empty fragment shader handle
-		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		source = fragSrc.c_str();
+		glShaderSource(fragShader, 1, &source, 0);
+		glCompileShader(fragShader);
 
-		// Send the fragment shader source code to GL
-		// Note that std::string's .c_str is NULL character terminated.
-		source = (const GLchar *) fragSrc.c_str();
-		glShaderSource(fragmentShader, 1, &source, 0);
+		glGetShaderiv(fragShader, GL_COMPILE_STATUS, &status);
 
-		// Compile the fragment shader
-		glCompileShader(fragmentShader);
-
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
+		if (status == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+			glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &maxLength);
 
-			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]);
+			glGetShaderInfoLog(fragShader, maxLength, &maxLength, &infoLog[0]);
 
-			// We don't need the shader anymore.
-			glDeleteShader(fragmentShader);
-			// Either of them. Don't leak shaders.
-			glDeleteShader(vertexShader);
+			glDeleteShader(vertShader);
+			glDeleteShader(fragShader);
 
 			FOXE_CORE_ERROR("{0}", infoLog.data());
-			FOXE_CORE_ASSERT(false, "Shader compilation failure");
+			FOXE_CORE_ASSERT(false, "Fragment shader compilation failure");
 
-			// In this simple program, we'll just leave
 			return;
 		}
 
-		// Vertex and fragment shaders are successfully compiled.
-		// Now time to link them together into a program.
-		// Get a program object.
+		m_Handle = glCreateProgram();
 
-		m_handle = glCreateProgram();
+		glAttachShader(m_Handle, vertShader);
+		glAttachShader(m_Handle, fragShader);
 
-		// Attach our shaders to our program
-		glAttachShader(m_handle, vertexShader);
-		glAttachShader(m_handle, fragmentShader);
+		glLinkProgram(m_Handle);
+		glGetProgramiv(m_Handle, GL_LINK_STATUS, &status);
 
-		// Link our program
-		glLinkProgram(m_handle);
-
-		// Note the different functions here: glGetProgram* instead of glGetShader*.
-		GLint isLinked = 0;
-		glGetProgramiv(m_handle, GL_LINK_STATUS, (int *) &isLinked);
-		if (isLinked == GL_FALSE)
+		if (status == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetProgramiv(m_handle, GL_INFO_LOG_LENGTH, &maxLength);
+			glGetProgramiv(m_Handle, GL_INFO_LOG_LENGTH, &maxLength);
 
-			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetProgramInfoLog(m_handle, maxLength, &maxLength, &infoLog[0]);
+			glGetProgramInfoLog(m_Handle, maxLength, &maxLength, &infoLog[0]);
 
-			// We don't need the program anymore.
-			glDeleteProgram(m_handle);
-			// Don't leak shaders either.
-			glDeleteShader(vertexShader);
-			glDeleteShader(fragmentShader);
+			glDeleteProgram(m_Handle);
+			glDeleteShader(vertShader);
+			glDeleteShader(fragShader);
 
 			FOXE_CORE_ERROR("{0}", infoLog.data());
 			FOXE_CORE_ASSERT(false, "Shader link failure");
 
-			// In this simple program, we'll just leave
 			return;
 		}
 
-		// Always detach shaders after a successful link.
-		glDetachShader(m_handle, vertexShader);
-		glDetachShader(m_handle, fragmentShader);
+		glDetachShader(m_Handle, vertShader);
+		glDetachShader(m_Handle, fragShader);
 
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
+		glDeleteShader(vertShader);
+		glDeleteShader(fragShader);
 	}
 
 	Shader::~Shader()
 	{
-		if(m_handle != 0)
-			glDeleteProgram(m_handle);
+		glDeleteProgram(m_Handle);
 	}
 
-	void Shader::bind() const
+	void Shader::Bind() const
 	{
-		glUseProgram(m_handle);
+		glUseProgram(m_Handle);
 	}
 
-	void Shader::unbind() const
+	void Shader::Unbind() const
 	{
 		glUseProgram(0);
 	}

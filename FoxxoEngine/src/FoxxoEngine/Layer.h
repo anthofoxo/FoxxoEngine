@@ -5,20 +5,19 @@
 
 namespace FoxxoEngine
 {
-	class Layer
+	struct Layer
 	{
-	public:
-		Layer(const std::string &name = "layer");
+		Layer(const std::string& name = "Layer");
 		virtual ~Layer();
 
-		virtual void onAttach() {}
-		virtual void onDetach() {}
-		virtual void onUpdate() {}
-		virtual void onImGuiRender() {}
-		virtual void onEvent(Event &e) {}
+		virtual void OnAttach() {}
+		virtual void OnDetach() {}
+		virtual void OnUpdate() {}
+		virtual void OnGuiRender() {}
+		virtual void OnEvent(Event& e) {}
 
-		inline const std::string& getName() const { return m_debugName; }
+		inline const std::string& GetDebugName() const { return m_DebugName; }
 	private:
-		std::string m_debugName;
+		std::string m_DebugName;
 	};
 }

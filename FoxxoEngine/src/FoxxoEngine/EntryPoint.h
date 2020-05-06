@@ -2,16 +2,16 @@
 
 #ifdef FOXE_PLATFORM_WINDOWS
 
-extern FoxxoEngine::Application* FoxxoEngine::createApplication();
+extern FoxxoEngine::Application* FoxxoEngine::CreateApplication();
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-	FoxxoEngine::Log::init();
-	FOXE_CORE_WARN("Initialized Log!");
+	FoxxoEngine::Log::Init();
+	FOXE_CORE_INFO("Initialized Log!");
 	FOXE_INFO("Initialized Log!");
 
-	auto app = FoxxoEngine::createApplication();
-	app->run();
+	auto app = FoxxoEngine::CreateApplication();
+	app->Run();
 	delete app;
 }
 

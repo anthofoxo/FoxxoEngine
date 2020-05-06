@@ -18,31 +18,31 @@ namespace FoxxoEngine
 		Application();
 		virtual ~Application();
 
-		void run();
+		void Run();
 
-		void onEvent(Event &e);
+		void OnEvent(Event& e);
 
-		void pushLayer(Layer *layer);
-		void pushOverlay(Layer *layer);
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
 
-		inline static Application& get() { return *s_instance; }
-		inline Window& getWindow() const { return *m_window; }
+		inline static Application& Get() { return *s_Instance; }
+		inline Window& GetWindow() const { return *m_Window; }
 	private:
-		bool onWindowClose(WindowCloseEvent &e);
+		bool OnWindowClose(WindowCloseEvent& e);
 
-		std::unique_ptr<Window> m_window;
-		ImGuiLayer *m_imGuiLayer;
-		bool m_running = true;
-		LayerStack m_layerStack;
+		std::unique_ptr<Window> m_Window;
+		ImGuiLayer *m_ImGuiLayer;
+		bool m_Running = true;
+		LayerStack m_LayerStack;
 
 		std::shared_ptr<Shader> m_shader;
 		std::shared_ptr<Buffer> m_vbo;
 		std::shared_ptr<Buffer> m_ibo;
 		std::shared_ptr<VertexArray> m_vao;
 	private:
-		static Application* s_instance;
+		static Application* s_Instance;
 	};
 
 	// To be defined in client
-	Application* createApplication();
+	Application* CreateApplication();
 }

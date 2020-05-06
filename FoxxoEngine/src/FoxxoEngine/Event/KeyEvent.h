@@ -7,50 +7,49 @@ namespace FoxxoEngine
 	class KeyEvent : public Event
 	{
 	public:
-		inline int getKeyCode() const { return m_keycode; }
+		inline int GetKeyCode() const { return m_Keycode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput);
 	protected:
 		KeyEvent(int keycode)
-			: m_keycode(keycode)
+			: m_Keycode(keycode)
 		{}
 
-		int m_keycode;
+		int m_Keycode;
 	};
 
 	class KeyPressedEvent : public KeyEvent
 	{
+	private:
+		int m_RepeatCount;
 	public:
 		KeyPressedEvent(int keycode, int repeatCount)
-			: KeyEvent(keycode), m_repeatCount(repeatCount)
+			: KeyEvent(keycode), m_RepeatCount(repeatCount)
 		{}
 
-		inline int getRepeatCount() const { return m_repeatCount; }
+		inline int GetRepeatCount() const { return m_RepeatCount; }
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyPressedEvent: " << m_keycode << " (" << m_repeatCount << " repeats)";
+			ss << "KeyPressedEvent: " << m_Keycode << " (" << m_RepeatCount << " repeats)";
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(KeyPressed);
-	private:
-		int m_repeatCount;
 	};
 
 	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)
-			: KeyEvent(keycode)
-		{}
+			: KeyEvent(keycode) {}
 
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyTypedEvent: " << m_keycode;
+			ss << "KeyTypedEvent: " << m_Keycode;
 			return ss.str();
 		}
 
@@ -61,13 +60,12 @@ namespace FoxxoEngine
 	{
 	public:
 		KeyReleasedEvent(int keycode)
-			: KeyEvent(keycode)
-		{}
+			: KeyEvent(keycode) {}
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyReleasedEvent: " << m_keycode;
+			ss << "KeyReleasedEvent: " << m_Keycode;
 			return ss.str();
 		}
 

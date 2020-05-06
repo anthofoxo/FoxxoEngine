@@ -13,13 +13,13 @@ namespace FoxxoEngine
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		virtual void onAttach() override;
-		virtual void onDetach() override;
-		virtual void onImGuiRender() override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnGuiRender() override;
 
-		void begin();
-		void end();
+		void Begin();
+		void End();
 	private:
-		float m_time = 0.0f;
+		float m_Time = 0.0f;
 	};
 }

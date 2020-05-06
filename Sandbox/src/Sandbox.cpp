@@ -4,15 +4,13 @@ class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example")
+		: Layer("Example") {}
+
+	void OnUpdate() override
 	{
 	}
 
-	void onUpdate() override
-	{
-	}
-
-	void onEvent(FoxxoEngine::Event &e) override
+	void OnEvent(FoxxoEngine::Event &e) override
 	{
 	}
 };
@@ -22,7 +20,7 @@ class Sandbox : public FoxxoEngine::Application
 public:
 	Sandbox()
 	{
-		pushLayer(new ExampleLayer());
+		PushLayer(new ExampleLayer());
 	}
 
 	~Sandbox()
@@ -31,7 +29,7 @@ public:
 	}
 };
 
-FoxxoEngine::Application* FoxxoEngine::createApplication()
+FoxxoEngine::Application* FoxxoEngine::CreateApplication()
 {
 	return new Sandbox();
 }

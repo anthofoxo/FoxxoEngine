@@ -3,30 +3,27 @@
 
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"
-#include "Input.h"
-#include "Renderer/Renderer.h"
-
+#include "FoxxoEngine/Input.h"
+#include "FoxxoEngine/Renderer/Renderer.h"
 
 #include <glad/glad.h>
 
-namespace FoxxoEngine
-{
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	Application *Application::s_instance = nullptr;
-
-	
+namespace FoxxoEngine
+{
+	Application *Application::s_Instance = nullptr;
 
 	Application::Application()
 	{
-		FOXE_CORE_ASSERT(!s_instance, "Application already exists!");
-		s_instance = this;
+		FOXE_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
 
-		m_window = std::unique_ptr<Window>(Window::create());
-		m_window->setEventCallback(BIND_EVENT_FN(onEvent));
+		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
-		m_imGuiLayer = new ImGuiLayer();
-		pushOverlay(m_imGuiLayer);
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 
 		std::string vertSrc = R"(#version 330 core
 
@@ -59,9 +56,7 @@ void main()
 			0, 1, 2
 		};
 
-		
-
-		using namespace RC;
+		using namespace RendererConstants;
 
 		m_vao.reset(VertexArray::create());
 		
@@ -69,10 +64,10 @@ void main()
 			{ShaderDataType::Float3, "position"}
 		};
 
-		m_vbo.reset(Buffer::create(FOXE_ARRAY_BUFFER, FOXE_STATIC_DRAW, vertices, sizeof(vertices)));
+		m_vbo.reset(Buffer::Create(FOXE_ARRAY_BUFFER, FOXE_STATIC_DRAW, vertices, sizeof(vertices)));
 		m_vbo->SetLayout(layout);
 
-		m_ibo.reset(Buffer::create(FOXE_ELEMENT_ARRAY_BUFFER, FOXE_STATIC_DRAW, indices, sizeof(indices)));
+		m_ibo.reset(Buffer::Create(FOXE_ELEMENT_ARRAY_BUFFER, FOXE_STATIC_DRAW, indices, sizeof(indices)));
 
 		m_vao->AddVertexBuffer(m_vbo);
 		m_vao->SetIndexBuffer(m_ibo);
@@ -82,64 +77,61 @@ void main()
 	{
 	}
 
-	void Application::pushLayer(Layer *layer)
+	void Application::PushLayer(Layer* layer)
 	{
-		m_layerStack.pushLayer(layer);
-		layer->onAttach();
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
-	void Application::pushOverlay(Layer *overlay)
+	void Application::PushOverlay(Layer* overlay)
 	{
-		m_layerStack.pushOverlay(overlay);
-		overlay->onAttach();
+		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
-	bool Application::onWindowClose(WindowCloseEvent &e)
+	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		m_running = false;
+		m_Running = false;
 		return true;
 	}
 
-	void Application::onEvent(Event &e)
+	void Application::OnEvent(Event &e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
 		FOXE_CORE_TRACE("{0}", e);
 
-		for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
-			(*--it)->onEvent(e);
-			if (e.m_handled)
+			(*--it)->OnEvent(e);
+			if (e.m_Handled)
 				break;
 		}
 	}
 
-	void Application::run()
+	void Application::Run()
 	{
-		while (m_running)
+		while (m_Running)
 		{
-			// THIS IS BAD DONT DO THIS
 			glClearColor(0, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			m_shader->bind();
+			m_shader->Bind();
 			m_vao->Bind();
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(RendererConstants::FOXE_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 			//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-			for (Layer *layer : m_layerStack)
-				layer->onUpdate();
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate();
 
-			m_imGuiLayer->begin();
-			for (Layer *layer : m_layerStack)
-				layer->onImGuiRender();
-			m_imGuiLayer->end();
+			m_ImGuiLayer->Begin();
 
-			//auto [x, y] = Input::getMousePos();
-		//	FOXE_CORE_TRACE("{0}, {1}", x, y);
+			for (Layer *layer : m_LayerStack)
+				layer->OnGuiRender();
+			m_ImGuiLayer->End();
 
-			m_window->onUpdate();
+			m_Window->OnUpdate();
 		}
 	}
 }

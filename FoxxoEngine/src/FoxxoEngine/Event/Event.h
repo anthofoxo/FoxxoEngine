@@ -16,63 +16,62 @@ namespace FoxxoEngine
 	enum EventCategory
 	{
 		None = 0,
-		EventCategoryApplication = BIT(0),
-		EventCategoryInput       = BIT(1),
-		EventCategoryKeyboard    = BIT(2),
-		EventCategoryMouse       = BIT(3),
-		EventCategoryMouseButton = BIT(4)
+		EventCategoryApplication = FOXE_BIT(0),
+		EventCategoryInput       = FOXE_BIT(1),
+		EventCategoryKeyboard    = FOXE_BIT(2),
+		EventCategoryMouse       = FOXE_BIT(3),
+		EventCategoryMouseButton = FOXE_BIT(4)
 	};
 
-#define EVENT_CLASS_TYPE(type) static EventType getStaticType() { return EventType::##type; }\
-								virtual EventType getEventType() const override { return getStaticType(); }\
-								virtual const char* getName() const override { return #type; }
+#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type; }\
+								virtual EventType GetEventType() const override { return GetStaticType(); }\
+								virtual const char* GetName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
+#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
 	class Event
 	{
 		friend class EventDispatcher;
 	public:
-		virtual EventType getEventType() const = 0;
-		virtual const char* getName() const = 0;
-		virtual int getCategoryFlags() const = 0;
-		virtual std::string toString() const { return getName(); }
+		virtual EventType GetEventType() const = 0;
+		virtual const char* GetName() const = 0;
+		virtual int GetCategoryFlags() const = 0;
+		virtual std::string ToString() const { return GetName(); }
 
 		inline bool isInCategory(EventCategory category)
 		{
-			return getCategoryFlags() & category;
+			return GetCategoryFlags() & category;
 		}
 
-		bool m_handled = false;
+		bool m_Handled = false;
 	};
 
 	class EventDispatcher
 	{
+	private:
+		Event& m_Event;
+
 		template<typename T>
 		using EventFn = std::function<bool(T &)>;
 
 	public:
 		EventDispatcher(Event &event)
-			: m_event(event)
-		{
-		}
+			: m_Event(event) {}
 
 		template<typename T>
-		bool dispatch(EventFn<T> func)
+		bool Dispatch(EventFn<T> func)
 		{
-			if (m_event.getEventType() == T::getStaticType())
+			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_event.m_handled = func(*(T *) &m_event);
+				m_Event.m_Handled = func(*(T*) &m_Event);
 				return true;
 			}
 			return false;
 		}
-	private:
-		Event &m_event;
 	};
 
-	inline std::ostream& operator<<(std::ostream &os, const Event &e)
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
-		return os << e.toString();
+		return os << e.ToString();
 	}
 }

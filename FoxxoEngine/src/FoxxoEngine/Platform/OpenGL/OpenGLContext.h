@@ -9,11 +9,11 @@ namespace FoxxoEngine
 	class OpenGLContext : public GraphicsContext
 	{
 	public:
-		OpenGLContext(GLFWwindow *windowHandle);
+		OpenGLContext(GLFWwindow* window);
 
-		virtual void init() override;
-		virtual void swapBuffers() override;
+		virtual void Init() override;
+		virtual void SwapBuffers() override;
 	private:
-		GLFWwindow *m_windowHandle;
+		GLFWwindow* m_Window;
 	};
 }

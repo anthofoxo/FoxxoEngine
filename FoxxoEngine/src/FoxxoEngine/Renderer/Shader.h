@@ -4,17 +4,14 @@
 
 namespace FoxxoEngine
 {
-	class Shader
+	struct Shader
 	{
-	public:
-		Shader(const std::string &vertSrc, const std::string &FragSrc);
+		Shader(const std::string& vertSrc, const std::string& fragSrc);
 		~Shader();
 
-		void bind() const;
-		void unbind() const;
+		void Bind() const;
+		void Unbind() const;
 
-		uint32_t m_handle = 0;
-	private:
-		
+		uint32_t m_Handle = 0;
 	};
 }
