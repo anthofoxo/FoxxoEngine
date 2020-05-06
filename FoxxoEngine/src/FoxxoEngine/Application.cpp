@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Renderer/Renderer.h"
 
+
 #include <glad/glad.h>
 
 namespace FoxxoEngine
@@ -14,27 +15,7 @@ namespace FoxxoEngine
 
 	Application *Application::s_instance = nullptr;
 
-	static GLenum ShaderDataTypeGLType(ShaderDataType type)
-	{
-		switch (type)
-		{
-			case ShaderDataType::Float:		return GL_FLOAT;
-			case ShaderDataType::Float2:	return GL_FLOAT;
-			case ShaderDataType::Float3:	return GL_FLOAT;
-			case ShaderDataType::Float4:	return GL_FLOAT;
-			case ShaderDataType::Mat2:		return GL_FLOAT;
-			case ShaderDataType::Mat3:		return GL_FLOAT;
-			case ShaderDataType::Mat4:		return GL_FLOAT;
-			case ShaderDataType::Int:		return GL_INT;
-			case ShaderDataType::Int2:		return GL_INT;
-			case ShaderDataType::Int3:		return GL_INT;
-			case ShaderDataType::Int4:		return GL_INT;
-			case ShaderDataType::Bool:		return GL_BOOL;
-		}
-
-		FOXE_CORE_ASSERT(false, "Unknown shader datatype");
-		return 0;
-	}
+	
 
 	Application::Application()
 	{
@@ -78,37 +59,27 @@ void main()
 			0, 1, 2
 		};
 
+		
+
+		using namespace RC;
+
+		m_vao.reset(VertexArray::create());
+		
 		BufferLayout layout = {
 			{ShaderDataType::Float3, "position"}
 		};
 
-		using namespace RC;
-
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
-
 		m_vbo.reset(Buffer::create(FOXE_ARRAY_BUFFER, FOXE_STATIC_DRAW, vertices, sizeof(vertices)));
 		m_vbo->SetLayout(layout);
 
-		uint32_t index = 0;
-		for (const auto &element : layout)
-		{
-			glVertexAttribPointer(index, ShaderDataTypeCount(element.Type), ShaderDataTypeGLType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.m_stride, (const void*)element.Offset);
-			glEnableVertexAttribArray(index);
-
-			++index;
-		}
-
-
 		m_ibo.reset(Buffer::create(FOXE_ELEMENT_ARRAY_BUFFER, FOXE_STATIC_DRAW, indices, sizeof(indices)));
 
-	
-
+		m_vao->AddVertexBuffer(m_vbo);
+		m_vao->SetIndexBuffer(m_ibo);
 	}
 
 	Application::~Application()
 	{
-		glDeleteVertexArrays(1, &vao);
 	}
 
 	void Application::pushLayer(Layer *layer)
@@ -153,7 +124,7 @@ void main()
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			m_shader->bind();
-			glBindVertexArray(vao);
+			m_vao->Bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 			//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

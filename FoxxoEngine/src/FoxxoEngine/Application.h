@@ -8,6 +8,7 @@
 #include "FoxxoEngine/ImGui/ImGuiLayer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace FoxxoEngine
 {
@@ -34,10 +35,10 @@ namespace FoxxoEngine
 		bool m_running = true;
 		LayerStack m_layerStack;
 
-		std::unique_ptr<Shader> m_shader;
-		std::unique_ptr<Buffer> m_vbo;
-		std::unique_ptr<Buffer> m_ibo;
-		unsigned int vao;
+		std::shared_ptr<Shader> m_shader;
+		std::shared_ptr<Buffer> m_vbo;
+		std::shared_ptr<Buffer> m_ibo;
+		std::shared_ptr<VertexArray> m_vao;
 	private:
 		static Application* s_instance;
 	};

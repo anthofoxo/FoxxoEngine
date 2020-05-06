@@ -1,14 +1,11 @@
 #include "FoxxoEngine.h"
 
-#include "glad/glad.h"
-
 class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
 		: Layer("Example")
 	{
-
 	}
 
 	void onUpdate() override
@@ -17,7 +14,6 @@ public:
 
 	void onEvent(FoxxoEngine::Event &e) override
 	{
-		FOXE_TRACE("{0}", e);
 	}
 };
 
