@@ -1,7 +1,8 @@
 #pragma once
 
-#include "FoxxoEngine/Window.h"
 #include <GLFW/glfw3.h>
+#include "FoxxoEngine/Window.h"
+#include "FoxxoEngine/Renderer/GraphicsContext.h"
 
 namespace FoxxoEngine
 {
@@ -28,6 +29,7 @@ namespace FoxxoEngine
 		virtual void shutdown();
 	private:
 		GLFWwindow *m_window;
+		GraphicsContext *m_context;
 
 		struct WindowData
 		{

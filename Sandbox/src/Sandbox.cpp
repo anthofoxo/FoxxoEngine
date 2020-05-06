@@ -1,16 +1,18 @@
 #include "FoxxoEngine.h"
 
+#include "glad/glad.h"
+
 class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
 		: Layer("Example")
 	{
+
 	}
 
 	void onUpdate() override
 	{
-		FOXE_INFO("ExampleLayer::Update");
 	}
 
 	void onEvent(FoxxoEngine::Event &e) override

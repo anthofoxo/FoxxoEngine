@@ -7,8 +7,10 @@
 #include "FoxxoEngine/Event/MouseEvent.h"
 #include "WindowsInput.h"
 
-#include <glad/glad.h>
-#include <glfw/glfw3.h>
+
+#include <GLFW/glfw3.h>
+
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace FoxxoEngine
 {
@@ -55,12 +57,10 @@ namespace FoxxoEngine
 
 		m_window = glfwCreateWindow((int) props.m_width, (int) props.m_height, m_data.m_title.c_str(), nullptr, nullptr);
 
-		FOXE_CORE_ASSERT(m_window, "Failed to create window!")
+		FOXE_CORE_ASSERT(m_window, "Failed to create window!");
 
-		glfwMakeContextCurrent(m_window);
-
-		int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-		FOXE_CORE_ASSERT(status, "Failed to initialize Glad!");
+		m_context = new OpenGLContext(m_window);
+		m_context->init();
 
 		glfwSetWindowUserPointer(m_window, &m_data);
 		setVSync(true);
@@ -166,7 +166,7 @@ namespace FoxxoEngine
 	void WindowsWindow::onUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_window);
+		m_context->swapBuffers();
 	}
 
 	void WindowsWindow::setVSync(bool enabled)
