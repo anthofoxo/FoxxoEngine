@@ -1,17 +1,20 @@
 #include "foxepch.h"
 #include "Renderer.h"
 
-#include <glad/glad.h>
-
 namespace FoxxoEngine
 {
-	namespace RendererConstants
+
+	void Renderer::BeginScene()
 	{
-		uint32_t FOXE_ARRAY_BUFFER = GL_ARRAY_BUFFER;
-		uint32_t FOXE_ELEMENT_ARRAY_BUFFER = GL_ELEMENT_ARRAY_BUFFER;
-		uint32_t FOXE_STATIC_DRAW = GL_STATIC_DRAW;
-		uint32_t FOXE_TRIANGLES = GL_TRIANGLES;
 	}
 
-	RendererAPI Renderer::s_Api = RendererAPI::OpenGL;
+	void Renderer::EndScene()
+	{
+	}
+
+	void Renderer::Submit(const std::shared_ptr<VertexArray>& vao)
+	{
+		vao->Bind();
+		RenderCommand::DrawIndexed(vao);
+	}
 }

@@ -36,8 +36,8 @@ namespace FoxxoEngine
 		LayerStack m_LayerStack;
 
 		std::shared_ptr<Shader> m_shader;
-		std::shared_ptr<Buffer> m_vbo;
-		std::shared_ptr<Buffer> m_ibo;
+		std::shared_ptr<VertexBuffer> m_vbo;
+		std::shared_ptr<IndexBuffer> m_ibo;
 		std::shared_ptr<VertexArray> m_vao;
 	private:
 		static Application* s_Instance;

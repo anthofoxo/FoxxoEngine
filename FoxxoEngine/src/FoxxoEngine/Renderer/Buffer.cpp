@@ -20,12 +20,24 @@ namespace FoxxoEngine
 		}
 	}
 
-	Buffer* Buffer::Create(uint32_t type, uint32_t drawMode, void* data, size_t size)
+	VertexBuffer* VertexBuffer::Create(void* data, size_t size)
 	{
-		switch (Renderer::GetAPI())
+		switch (Renderer::GetApi())
 		{
-			case RendererAPI::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
-			case RendererAPI::OpenGL: return new OpenGLBuffer(type, drawMode, data, size);
+			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
+			case RendererApi::Api::OpenGL: return new OpenGLVertexBuffer(data, size);
+		}
+
+		FOXE_CORE_ASSERT(false, "Unknown rendering api");
+		return nullptr;
+	}
+
+	IndexBuffer* IndexBuffer::Create(void* data, size_t size)
+	{
+		switch (Renderer::GetApi())
+		{
+			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
+			case RendererApi::Api::OpenGL: return new OpenGLIndexBuffer(data, size);
 		}
 
 		FOXE_CORE_ASSERT(false, "Unknown rendering api");

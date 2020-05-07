@@ -4,10 +4,10 @@
 
 namespace FoxxoEngine
 {
-	struct OpenGLBuffer : public Buffer
+	struct OpenGLVertexBuffer : public VertexBuffer
 	{
-		OpenGLBuffer(uint32_t type, uint32_t drawMode, void* data, size_t size);
-		virtual ~OpenGLBuffer();
+		OpenGLVertexBuffer(void* data, size_t size);
+		virtual ~OpenGLVertexBuffer();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
@@ -18,5 +18,21 @@ namespace FoxxoEngine
 		uint32_t m_Handle;
 		uint32_t m_Type;
 		BufferLayout m_Layout;
+	};
+
+	struct OpenGLIndexBuffer : public IndexBuffer
+	{
+		OpenGLIndexBuffer(void* data, size_t size);
+		virtual ~OpenGLIndexBuffer();
+
+		virtual void Bind() const override;
+		virtual void Unbind() const override;
+
+		inline virtual int GetCount() const override { return m_Count; }
+
+		uint32_t m_Handle;
+		uint32_t m_Type;
+		BufferLayout m_Layout;
+		int m_Count;
 	};
 }

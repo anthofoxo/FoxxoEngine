@@ -5,27 +5,49 @@
 
 namespace FoxxoEngine
 {
-	OpenGLBuffer::OpenGLBuffer(uint32_t type, uint32_t drawMode, void* data, size_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, size_t size)
 	{
-		m_Type = type;
-
 		glCreateBuffers(1, &m_Handle);
 		Bind();
-		glBufferData(m_Type, size, data, drawMode);
+		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	}
 
-	OpenGLBuffer::~OpenGLBuffer()
+	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
 		glDeleteBuffers(1, &m_Handle);
 	}
 
-	void OpenGLBuffer::Bind() const
+	void OpenGLVertexBuffer::Bind() const
 	{
-		glBindBuffer(m_Type, m_Handle);
+		glBindBuffer(GL_ARRAY_BUFFER, m_Handle);
 	}
 
-	void OpenGLBuffer::Unbind() const
+	void OpenGLVertexBuffer::Unbind() const
 	{
-		glBindBuffer(m_Type, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	OpenGLIndexBuffer::OpenGLIndexBuffer(void* data, size_t size)
+	{
+		glCreateBuffers(1, &m_Handle);
+		Bind();
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+
+		m_Count = size / sizeof(unsigned int);
+	}
+
+	OpenGLIndexBuffer::~OpenGLIndexBuffer()
+	{
+		glDeleteBuffers(1, &m_Handle);
+	}
+
+	void OpenGLIndexBuffer::Bind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Handle);
+	}
+
+	void OpenGLIndexBuffer::Unbind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 }

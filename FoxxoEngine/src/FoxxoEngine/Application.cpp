@@ -6,8 +6,6 @@
 #include "FoxxoEngine/Input.h"
 #include "FoxxoEngine/Renderer/Renderer.h"
 
-#include <glad/glad.h>
-
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 namespace FoxxoEngine
@@ -56,18 +54,16 @@ void main()
 			0, 1, 2
 		};
 
-		using namespace RendererConstants;
-
 		m_vao.reset(VertexArray::create());
 		
 		BufferLayout layout = {
 			{ShaderDataType::Float3, "position"}
 		};
 
-		m_vbo.reset(Buffer::Create(FOXE_ARRAY_BUFFER, FOXE_STATIC_DRAW, vertices, sizeof(vertices)));
+		m_vbo.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		m_vbo->SetLayout(layout);
 
-		m_ibo.reset(Buffer::Create(FOXE_ELEMENT_ARRAY_BUFFER, FOXE_STATIC_DRAW, indices, sizeof(indices)));
+		m_ibo.reset(IndexBuffer::Create(indices, sizeof(indices)));
 
 		m_vao->AddVertexBuffer(m_vbo);
 		m_vao->SetIndexBuffer(m_ibo);
@@ -114,13 +110,13 @@ void main()
 	{
 		while (m_Running)
 		{
-			glClearColor(0, 0, 0, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor({1, 0, 1, 1});
+			RenderCommand::Clear();
 
+			Renderer::BeginScene();
 			m_shader->Bind();
-			m_vao->Bind();
-			glDrawElements(RendererConstants::FOXE_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-			//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			Renderer::Submit(m_vao);
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

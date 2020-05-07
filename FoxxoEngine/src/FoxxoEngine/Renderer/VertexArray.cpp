@@ -8,10 +8,10 @@ namespace FoxxoEngine
 {
 	VertexArray* VertexArray::create()
 	{
-		switch (Renderer::GetAPI())
+		switch (Renderer::GetApi())
 		{
-			case RendererAPI::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
-			case RendererAPI::OpenGL: return new OpenGLVertexArray();
+			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
+			case RendererApi::Api::OpenGL: return new OpenGLVertexArray();
 		}
 
 		FOXE_CORE_ASSERT(false, "Unknown rendering api");

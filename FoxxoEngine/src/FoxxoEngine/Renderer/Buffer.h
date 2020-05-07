@@ -81,9 +81,9 @@ namespace FoxxoEngine
 		std::vector<BufferElement>::const_iterator end() const { return m_Elements.end(); }
 	};
 
-	struct Buffer
+	struct VertexBuffer
 	{
-		virtual ~Buffer() {}
+		virtual ~VertexBuffer() {}
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -91,6 +91,18 @@ namespace FoxxoEngine
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static Buffer* Create(uint32_t type, uint32_t drawMode, void* data, size_t size);
+		static VertexBuffer* Create(void* data, size_t size);
+	};
+
+	struct IndexBuffer
+	{
+		virtual ~IndexBuffer() {}
+
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+
+		virtual int GetCount() const = 0;
+
+		static IndexBuffer* Create(void* data, size_t size);
 	};
 }
