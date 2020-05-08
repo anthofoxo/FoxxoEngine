@@ -6,7 +6,7 @@
 
 namespace FoxxoEngine
 {
-	VertexArray* VertexArray::create()
+	VertexArray* VertexArray::Create()
 	{
 		switch (Renderer::GetApi())
 		{

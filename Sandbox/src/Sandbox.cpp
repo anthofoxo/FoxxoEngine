@@ -4,7 +4,7 @@ class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), camera(-1.0f, 1.0f, -1.0f, 1.0f) {}
+		: Layer("Example"), camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
 
 	std::shared_ptr<FoxxoEngine::Shader> m_shader;
 	std::shared_ptr<FoxxoEngine::VertexBuffer> m_vbo;
@@ -14,15 +14,20 @@ public:
 
 	void OnAttach() override
 	{
-		std::string vertSrc = R"(#version 330 core
+		std::string vertSrc = R"(
+#version 330 core
 
 layout (location = 0) in vec3 vert_pos;
 
+uniform mat4 u_Projection;
+uniform mat4 u_View;
+
 void main()
 {
-	gl_Position = vec4(vert_pos, 1.0);
+	gl_Position = u_Projection * u_View * vec4(vert_pos, 1.0);
 })";
-		std::string fragSrc = R"(#version 330 core
+		std::string fragSrc = R"(
+#version 330 core
 
 layout (location = 0) out vec4 out_color;
 
@@ -31,7 +36,7 @@ void main()
 	out_color = vec4(1.0, 0.0, 0.0, 1.0);
 })";
 
-		m_shader = std::make_unique<FoxxoEngine::Shader>(vertSrc, fragSrc);
+		m_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
 
 		float vertices[] =
 		{
@@ -45,7 +50,7 @@ void main()
 			0, 1, 2
 		};
 
-		m_vao.reset(FoxxoEngine::VertexArray::create());
+		m_vao.reset(FoxxoEngine::VertexArray::Create());
 
 		FoxxoEngine::BufferLayout layout = {
 			{FoxxoEngine::ShaderDataType::Float3, "position"}
@@ -69,9 +74,10 @@ void main()
 		FoxxoEngine::RenderCommand::SetClearColor({ 1, 0, 1, 1 });
 		FoxxoEngine::RenderCommand::Clear();
 
-		FoxxoEngine::Renderer::BeginScene();
-		m_shader->Bind();
-		FoxxoEngine::Renderer::Submit(m_vao);
+		camera.SetPosition({ -0.5f, 0.0f, 0.0f });
+
+		FoxxoEngine::Renderer::BeginScene(camera);
+		FoxxoEngine::Renderer::Submit(m_shader, m_vao);
 		FoxxoEngine::Renderer::EndScene();
 	}
 

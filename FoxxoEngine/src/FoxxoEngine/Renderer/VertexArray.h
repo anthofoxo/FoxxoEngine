@@ -18,6 +18,6 @@ namespace FoxxoEngine
 		virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const = 0;
 		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& buffer) = 0;
 
-		static VertexArray* create();
+		static VertexArray* Create();
 	};
 }
