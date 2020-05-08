@@ -4,12 +4,13 @@ class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example") {}
+		: Layer("Example"), camera(-1.0f, 1.0f, -1.0f, 1.0f) {}
 
 	std::shared_ptr<FoxxoEngine::Shader> m_shader;
 	std::shared_ptr<FoxxoEngine::VertexBuffer> m_vbo;
 	std::shared_ptr<FoxxoEngine::IndexBuffer> m_ibo;
 	std::shared_ptr<FoxxoEngine::VertexArray> m_vao;
+	FoxxoEngine::OrthoCamera camera;
 
 	void OnAttach() override
 	{
@@ -57,7 +58,6 @@ void main()
 
 		m_vao->AddVertexBuffer(m_vbo);
 		m_vao->SetIndexBuffer(m_ibo);
-	
 	}
 
 	void OnDetach() override
@@ -75,7 +75,7 @@ void main()
 		FoxxoEngine::Renderer::EndScene();
 	}
 
-	void OnEvent(FoxxoEngine::Event &e) override
+	void OnEvent(FoxxoEngine::Event& e) override
 	{
 	}
 };
@@ -90,7 +90,6 @@ public:
 
 	~Sandbox()
 	{
-
 	}
 };
 

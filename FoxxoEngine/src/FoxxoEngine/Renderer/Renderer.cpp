@@ -3,7 +3,6 @@
 
 namespace FoxxoEngine
 {
-
 	void Renderer::BeginScene()
 	{
 	}

@@ -66,15 +66,15 @@ namespace FoxxoEngine
 		glfwSetFramebufferSizeCallback(m_Handle, [](GLFWwindow* window, int width, int height)
 		{
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
-			
+
 			data.m_Width = width;
 			data.m_Height = height;
 
 			WindowResizeEvent event(width, height);
-			data.EventCallback(event);			
+			data.EventCallback(event);
 		});
 
-		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow *window)
+		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow* window)
 		{
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
@@ -82,63 +82,63 @@ namespace FoxxoEngine
 			data.EventCallback(event);
 		});
 
-		glfwSetKeyCallback(m_Handle, [](GLFWwindow *window, int key, int scancode, int action, int mods)
+		glfwSetKeyCallback(m_Handle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			switch (action)
 			{
 				case GLFW_PRESS:
-				{
-					KeyPressedEvent event(key, 0);
-					data.EventCallback(event);
-					break;
-				}
+					{
+						KeyPressedEvent event(key, 0);
+						data.EventCallback(event);
+						break;
+					}
 				case GLFW_RELEASE:
-				{
-					KeyReleasedEvent event(key);
-					data.EventCallback(event);
-					break;
-				}
+					{
+						KeyReleasedEvent event(key);
+						data.EventCallback(event);
+						break;
+					}
 				case GLFW_REPEAT:
-				{
-					KeyPressedEvent event(key, 1);
-					data.EventCallback(event);
-					break;
-				}
+					{
+						KeyPressedEvent event(key, 1);
+						data.EventCallback(event);
+						break;
+					}
 			}
 		});
 
-		glfwSetCharCallback(m_Handle, [](GLFWwindow *window, unsigned int c)
+		glfwSetCharCallback(m_Handle, [](GLFWwindow* window, unsigned int c)
 		{
-			WindowData& data = *(WindowData *) glfwGetWindowUserPointer(window);
+			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			KeyTypedEvent event(c);
 			data.EventCallback(event);
 		});
 
-		glfwSetMouseButtonCallback(m_Handle, [](GLFWwindow *window, int button, int action, int mods)
+		glfwSetMouseButtonCallback(m_Handle, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			switch (action)
 			{
 				case GLFW_PRESS:
-				{
-					MouseButtonPressedEvent event(button);
-					data.EventCallback(event);
-					break;
-				}
+					{
+						MouseButtonPressedEvent event(button);
+						data.EventCallback(event);
+						break;
+					}
 				case GLFW_RELEASE:
-				{
-					MouseButtonReleasedEvent event(button);
-					data.EventCallback(event);
-					break;
-				}
+					{
+						MouseButtonReleasedEvent event(button);
+						data.EventCallback(event);
+						break;
+					}
 			}
 		});
 
-		glfwSetScrollCallback(m_Handle, [](GLFWwindow *window, double xOffset, double yOffset)
+		glfwSetScrollCallback(m_Handle, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
@@ -146,7 +146,7 @@ namespace FoxxoEngine
 			data.EventCallback(event);
 		});
 
-		glfwSetCursorPosCallback(m_Handle, [](GLFWwindow *window, double xPos, double yPos)
+		glfwSetCursorPosCallback(m_Handle, [](GLFWwindow* window, double xPos, double yPos)
 		{
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 

@@ -64,7 +64,7 @@ namespace FoxxoEngine
 		bool m_Normalized;
 
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-			: m_Type(type), m_Name(name), m_Size(ShaderDataTypeSize(type)), m_Offset(0), m_Normalized(normalized){}
+			: m_Type(type), m_Name(name), m_Size(ShaderDataTypeSize(type)), m_Offset(0), m_Normalized(normalized) {}
 	};
 
 	struct BufferLayout

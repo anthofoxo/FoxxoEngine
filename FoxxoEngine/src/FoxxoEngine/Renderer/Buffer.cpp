@@ -7,7 +7,7 @@
 namespace FoxxoEngine
 {
 	BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)
-	: m_Elements(elements)
+		: m_Elements(elements)
 	{
 		uint32_t offset = 0;
 		m_Stride = 0;

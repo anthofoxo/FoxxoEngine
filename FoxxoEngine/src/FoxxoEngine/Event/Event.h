@@ -17,9 +17,9 @@ namespace FoxxoEngine
 	{
 		None = 0,
 		EventCategoryApplication = FOXE_BIT(0),
-		EventCategoryInput       = FOXE_BIT(1),
-		EventCategoryKeyboard    = FOXE_BIT(2),
-		EventCategoryMouse       = FOXE_BIT(3),
+		EventCategoryInput = FOXE_BIT(1),
+		EventCategoryKeyboard = FOXE_BIT(2),
+		EventCategoryMouse = FOXE_BIT(3),
 		EventCategoryMouseButton = FOXE_BIT(4)
 	};
 
@@ -52,10 +52,10 @@ namespace FoxxoEngine
 		Event& m_Event;
 
 		template<typename T>
-		using EventFn = std::function<bool(T &)>;
+		using EventFn = std::function<bool(T&)>;
 
 	public:
-		EventDispatcher(Event &event)
+		EventDispatcher(Event& event)
 			: m_Event(event) {}
 
 		template<typename T>

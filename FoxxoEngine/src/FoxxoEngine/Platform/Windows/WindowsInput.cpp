@@ -30,18 +30,18 @@ namespace FoxxoEngine
 		auto window = WIN_PTR;
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
-		return {(float) x, (float) y};
+		return { (float) x, (float) y };
 	}
 
 	float WindowsInput::GetMouseXImpl() const
 	{
-		auto[x, y] = GetMousePosImpl();
+		auto [x, y] = GetMousePosImpl();
 		return x;
 	}
 
 	float WindowsInput::GetMouseYImpl() const
 	{
-		auto[x, y] = GetMousePosImpl();
+		auto [x, y] = GetMousePosImpl();
 		return y;
 	}
 }

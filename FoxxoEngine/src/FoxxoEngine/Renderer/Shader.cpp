@@ -26,7 +26,7 @@ namespace FoxxoEngine
 
 			std::vector<GLchar> infoLog(maxLength);
 			glGetShaderInfoLog(vertShader, maxLength, &maxLength, &infoLog[0]);
-			
+
 			glDeleteShader(vertShader);
 			glDeleteShader(fragShader);
 

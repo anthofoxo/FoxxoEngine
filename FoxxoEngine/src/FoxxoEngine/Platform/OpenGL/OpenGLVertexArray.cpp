@@ -55,8 +55,8 @@ namespace FoxxoEngine
 		buffer->Bind();
 
 		uint32_t index = 0;
-		const BufferLayout &layout = buffer->GetLayout();
-		for (const auto &element : layout)
+		const BufferLayout& layout = buffer->GetLayout();
+		for (const auto& element : layout)
 		{
 			glVertexAttribPointer(index, ShaderDataTypeCount(element.m_Type), ShaderDataTypeGLType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.m_Stride, (const void*) element.m_Offset);
 			glEnableVertexAttribArray(index);
