@@ -10,7 +10,7 @@
 
 namespace FoxxoEngine
 {
-	Application *Application::s_Instance = nullptr;
+	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
 	{
@@ -46,7 +46,7 @@ namespace FoxxoEngine
 		return true;
 	}
 
-	void Application::OnEvent(Event &e)
+	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
@@ -70,7 +70,7 @@ namespace FoxxoEngine
 
 			m_ImGuiLayer->Begin();
 
-			for (Layer *layer : m_LayerStack)
+			for (Layer* layer : m_LayerStack)
 				layer->OnGuiRender();
 			m_ImGuiLayer->End();
 
