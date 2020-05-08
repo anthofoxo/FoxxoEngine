@@ -22,51 +22,6 @@ namespace FoxxoEngine
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		std::string vertSrc = R"(#version 330 core
-
-layout (location = 0) in vec3 vert_pos;
-
-void main()
-{
-	gl_Position = vec4(vert_pos, 1.0);
-})";
-		std::string fragSrc = R"(#version 330 core
-
-layout (location = 0) out vec4 out_color;
-
-void main()
-{
-	out_color = vec4(1.0, 0.0, 0.0, 1.0);
-})";
-
-		m_shader = std::make_unique<Shader>(vertSrc, fragSrc);
-
-		float vertices[] =
-		{
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
-		};
-
-		unsigned int indices[] =
-		{
-			0, 1, 2
-		};
-
-		m_vao.reset(VertexArray::create());
-		
-		BufferLayout layout = {
-			{ShaderDataType::Float3, "position"}
-		};
-
-		m_vbo.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-		m_vbo->SetLayout(layout);
-
-		m_ibo.reset(IndexBuffer::Create(indices, sizeof(indices)));
-
-		m_vao->AddVertexBuffer(m_vbo);
-		m_vao->SetIndexBuffer(m_ibo);
 	}
 
 	Application::~Application()
@@ -110,14 +65,6 @@ void main()
 	{
 		while (m_Running)
 		{
-			RenderCommand::SetClearColor({1, 0, 1, 1});
-			RenderCommand::Clear();
-
-			Renderer::BeginScene();
-			m_shader->Bind();
-			Renderer::Submit(m_vao);
-			Renderer::EndScene();
-
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 

@@ -6,9 +6,6 @@
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"
 #include "FoxxoEngine/ImGui/ImGuiLayer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
 
 namespace FoxxoEngine
 {
@@ -31,14 +28,10 @@ namespace FoxxoEngine
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
-		ImGuiLayer *m_ImGuiLayer;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<Shader> m_shader;
-		std::shared_ptr<VertexBuffer> m_vbo;
-		std::shared_ptr<IndexBuffer> m_ibo;
-		std::shared_ptr<VertexArray> m_vao;
 	private:
 		static Application* s_Instance;
 	};
