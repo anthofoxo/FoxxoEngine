@@ -6,6 +6,8 @@
 #include "FoxxoEngine/Input.h"
 #include "FoxxoEngine/Renderer/Renderer.h"
 
+#include <GLFW/glfw3.h>
+
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 namespace FoxxoEngine
@@ -19,6 +21,7 @@ namespace FoxxoEngine
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetVSync(false);
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -51,8 +54,6 @@ namespace FoxxoEngine
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-		FOXE_CORE_TRACE("{0}", e);
-
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);
@@ -65,6 +66,11 @@ namespace FoxxoEngine
 	{
 		while (m_Running)
 		{
+			double time = glfwGetTime();
+			static double lastTime = time;
+			m_Delta = time - lastTime;
+			lastTime = time;
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 

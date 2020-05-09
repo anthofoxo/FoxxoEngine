@@ -17,6 +17,7 @@ namespace FoxxoEngine
 
 		inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
+
 	private:
 		void Recalc();
 	private:

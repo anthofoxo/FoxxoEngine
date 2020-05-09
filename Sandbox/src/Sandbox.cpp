@@ -4,13 +4,14 @@ class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
 
 	std::shared_ptr<FoxxoEngine::Shader> m_shader;
 	std::shared_ptr<FoxxoEngine::VertexBuffer> m_vbo;
 	std::shared_ptr<FoxxoEngine::IndexBuffer> m_ibo;
 	std::shared_ptr<FoxxoEngine::VertexArray> m_vao;
-	FoxxoEngine::OrthoCamera camera;
+	FoxxoEngine::OrthoCamera m_Camera;
+	float m_CameraSpeed = 0.1f;
 
 	void OnAttach() override
 	{
@@ -71,12 +72,43 @@ void main()
 
 	void OnUpdate() override
 	{
+		{
+			static glm::vec3 pos = glm::vec3();
+			static float rot = 0.0f;
+
+			double deltatime = FoxxoEngine::Application::Get().GetDeltaTime();
+
+			FOXE_INFO("Frametime: {1} FPS, {0} Seconds", deltatime, int(1.f / deltatime));
+
+			float m_CameraMoveSpeed = 1.f * (float) deltatime;
+			float m_CameraRotSpeed = 10.f * (float) deltatime;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_A) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_LEFT))
+				pos.x -= m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_D) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_RIGHT))
+				pos.x += m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_S) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_DOWN))
+				pos.y -= m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_W) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_UP))
+				pos.y += m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_Q))
+				rot += m_CameraRotSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_E))
+				rot -= m_CameraRotSpeed;
+
+			m_Camera.SetPosition(pos);
+			m_Camera.SetRotation(rot);
+		}
+
 		FoxxoEngine::RenderCommand::SetClearColor({ 1, 0, 1, 1 });
 		FoxxoEngine::RenderCommand::Clear();
 
-		camera.SetPosition({ -0.5f, 0.0f, 0.0f });
-
-		FoxxoEngine::Renderer::BeginScene(camera);
+		FoxxoEngine::Renderer::BeginScene(m_Camera);
 		FoxxoEngine::Renderer::Submit(m_shader, m_vao);
 		FoxxoEngine::Renderer::EndScene();
 	}

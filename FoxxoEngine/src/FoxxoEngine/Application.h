@@ -22,6 +22,7 @@ namespace FoxxoEngine
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		inline double GetDeltaTime() const { return m_Delta; }
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }
 	private:
@@ -31,7 +32,7 @@ namespace FoxxoEngine
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
+		double m_Delta;
 	private:
 		static Application* s_Instance;
 	};

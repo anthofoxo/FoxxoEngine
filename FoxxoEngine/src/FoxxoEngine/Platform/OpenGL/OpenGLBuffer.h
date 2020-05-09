@@ -16,7 +16,6 @@ namespace FoxxoEngine
 		virtual void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
 
 		uint32_t m_Handle;
-		uint32_t m_Type;
 		BufferLayout m_Layout;
 	};
 
@@ -31,7 +30,6 @@ namespace FoxxoEngine
 		inline virtual int GetCount() const override { return m_Count; }
 
 		uint32_t m_Handle;
-		uint32_t m_Type;
 		BufferLayout m_Layout;
 		int m_Count;
 	};

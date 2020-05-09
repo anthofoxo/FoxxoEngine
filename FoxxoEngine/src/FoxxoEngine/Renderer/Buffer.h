@@ -15,18 +15,18 @@ namespace FoxxoEngine
 	{
 		switch (type)
 		{
-			case ShaderDataType::Float:		return 1 * 1;
-			case ShaderDataType::Float2:	return 1 * 2;
-			case ShaderDataType::Float3:	return 1 * 3;
-			case ShaderDataType::Float4:	return 1 * 4;
-			case ShaderDataType::Mat2:		return 1 * 2 * 2;
-			case ShaderDataType::Mat3:		return 1 * 3 * 3;
-			case ShaderDataType::Mat4:		return 1 * 4 * 4;
-			case ShaderDataType::Int:		return 1 * 1;
-			case ShaderDataType::Int2:		return 1 * 2;
-			case ShaderDataType::Int3:		return 1 * 3;
-			case ShaderDataType::Int4:		return 1 * 4;
-			case ShaderDataType::Bool:		return 1 * 1;
+			case ShaderDataType::Float:		return 1;
+			case ShaderDataType::Float2:	return 2;
+			case ShaderDataType::Float3:	return 3;
+			case ShaderDataType::Float4:	return 4;
+			case ShaderDataType::Mat2:		return 2 * 2;
+			case ShaderDataType::Mat3:		return 3 * 3;
+			case ShaderDataType::Mat4:		return 4 * 4;
+			case ShaderDataType::Int:		return 1;
+			case ShaderDataType::Int2:		return 2;
+			case ShaderDataType::Int3:		return 3;
+			case ShaderDataType::Int4:		return 4;
+			case ShaderDataType::Bool:		return 1;
 		}
 
 		FOXE_CORE_ASSERT(false, "Unknown shader datatype");
@@ -37,18 +37,18 @@ namespace FoxxoEngine
 	{
 		switch (type)
 		{
-			case ShaderDataType::Float:		return 4 * 1;
-			case ShaderDataType::Float2:	return 4 * 2;
-			case ShaderDataType::Float3:	return 4 * 3;
-			case ShaderDataType::Float4:	return 4 * 4;
-			case ShaderDataType::Mat2:		return 4 * 2 * 2;
-			case ShaderDataType::Mat3:		return 4 * 3 * 3;
-			case ShaderDataType::Mat4:		return 4 * 4 * 4;
-			case ShaderDataType::Int:		return 4 * 1;
-			case ShaderDataType::Int2:		return 4 * 2;
-			case ShaderDataType::Int3:		return 4 * 3;
-			case ShaderDataType::Int4:		return 4 * 4;
-			case ShaderDataType::Bool:		return 1 * 1;
+			case ShaderDataType::Float:		return sizeof(float) * 1;
+			case ShaderDataType::Float2:	return sizeof(float) * 2;
+			case ShaderDataType::Float3:	return sizeof(float) * 3;
+			case ShaderDataType::Float4:	return sizeof(float) * 4;
+			case ShaderDataType::Mat2:		return sizeof(float) * 2 * 2;
+			case ShaderDataType::Mat3:		return sizeof(float) * 3 * 3;
+			case ShaderDataType::Mat4:		return sizeof(float) * 4 * 4;
+			case ShaderDataType::Int:		return sizeof(int) * 1;
+			case ShaderDataType::Int2:		return sizeof(int) * 2;
+			case ShaderDataType::Int3:		return sizeof(int) * 3;
+			case ShaderDataType::Int4:		return sizeof(int) * 4;
+			case ShaderDataType::Bool:		return sizeof(bool) * 1;
 		}
 
 		FOXE_CORE_ASSERT(false, "Unknown shader datatype");
@@ -72,7 +72,8 @@ namespace FoxxoEngine
 		std::vector<BufferElement> m_Elements;
 		uint32_t m_Stride;
 
-		BufferLayout() {}
+		BufferLayout()
+			: m_Stride(0) {}
 		BufferLayout(const std::initializer_list<BufferElement>& elements);
 
 		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
