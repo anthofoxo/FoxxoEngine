@@ -62,8 +62,6 @@ namespace FoxxoEngine
 
 	void ImGuiLayer::OnGuiRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
 	}
 
 	void ImGuiLayer::End()

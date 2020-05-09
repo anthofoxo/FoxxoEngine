@@ -1,6 +1,11 @@
+#include "foxepch.h"
 #include "FoxxoEngine.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "FoxxoEngine/Platform/OpenGL/OpenGLShader.h"
+
+#include "imgui/imgui.h"
 
 class ExampleLayer : public FoxxoEngine::Layer
 {
@@ -8,14 +13,15 @@ public:
 	ExampleLayer()
 		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
 
-	std::shared_ptr<FoxxoEngine::Shader> m_shader;
-	std::shared_ptr<FoxxoEngine::VertexBuffer> m_vbo;
-	std::shared_ptr<FoxxoEngine::IndexBuffer> m_ibo;
-	std::shared_ptr<FoxxoEngine::VertexArray> m_vao;
+	FoxxoEngine::Ref<FoxxoEngine::Shader> m_shader;
+	FoxxoEngine::Ref<FoxxoEngine::VertexBuffer> m_vbo;
+	FoxxoEngine::Ref<FoxxoEngine::IndexBuffer> m_ibo;
+	FoxxoEngine::Ref<FoxxoEngine::VertexArray> m_vao;
 	FoxxoEngine::OrthoCamera m_Camera;
 	float m_CameraSpeed = 0.1f;
 
 	glm::vec3 m_Position = glm::vec3();
+	glm::vec3 m_Color = { 1.0f, 0.0f, 0.0f };
 
 	void OnAttach() override
 	{
@@ -37,11 +43,11 @@ void main()
 
 layout (location = 0) out vec4 out_color;
 
-uniform vec4 u_Color;
+uniform vec3 u_Color;
 
 void main()
 {
-	out_color = u_Color;
+	out_color = vec4(u_Color, 1.0);
 })";
 
 		m_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
@@ -132,6 +138,9 @@ void main()
 
 		FoxxoEngine::Renderer::BeginScene(m_Camera);
 
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_shader)->Bind();
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_shader)->UploadUniform3f("u_Color", m_Color);
+
 		for (int y = 0; y < 5; ++y)
 		{
 			for (int x = 0; x < 5; ++x)
@@ -139,13 +148,30 @@ void main()
 				glm::vec3 pos = glm::vec3(float(x), float(y), 0.0f) * 0.2f;
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position + pos) * scale;
 
-				m_shader->UploadUniform4f("u_Color", { 0.5f, 0.5f, 0.5f, 1.0f });
-
 				FoxxoEngine::Renderer::Submit(m_shader, m_vao, transform);
 			}
 		}
 
 		FoxxoEngine::Renderer::EndScene();
+	}
+
+	void OnGuiRender()
+	{
+		ImGui::Begin("Render Settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::ColorEdit3("Triangles Color", glm::value_ptr(m_Color));
+		ImGui::End();
+
+		auto properties = FoxxoEngine::Application::Get().GetWindow().GetGraphicsContext().m_RendererProperties;
+		ImGui::Begin("Context Properties", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+		for (const auto [x, y] : properties)
+		{
+			std::stringstream ss;
+			ss << x << ": " << y;
+			ImGui::Text(ss.str().c_str());
+		}
+
+		ImGui::End();
 	}
 
 	void OnEvent(FoxxoEngine::Event& e) override

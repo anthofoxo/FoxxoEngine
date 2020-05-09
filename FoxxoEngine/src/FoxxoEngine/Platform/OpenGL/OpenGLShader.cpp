@@ -110,15 +110,68 @@ namespace FoxxoEngine
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::UploadUniformMat4f(const std::string& name, const glm::mat4& matrix)
+	void OpenGLShader::UploadUniform1f(const std::string& name, float value)
 	{
 		int location = glGetUniformLocation(m_Handle, name.c_str());
-		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::UploadUniform4f(const std::string& name, const glm::vec4& vec)
+	void OpenGLShader::UploadUniform2f(const std::string& name, const glm::vec2& value)
 	{
 		int location = glGetUniformLocation(m_Handle, name.c_str());
-		glUniform4fv(location, 1, glm::value_ptr(vec));
+		glUniform2fv(location, 1, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniform3f(const std::string& name, const glm::vec3& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform3fv(location, 1, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniform4f(const std::string& name, const glm::vec4& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform4fv(location, 1, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniform1i(const std::string& name, int value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::UploadUniform2i(const std::string& name, const glm::ivec2& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform2iv(location, 1, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniform3i(const std::string& name, const glm::ivec3& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform3iv(location, 1, glm::value_ptr(value));
+	}
+	void OpenGLShader::UploadUniform4i(const std::string& name, const glm::ivec4& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform4iv(location, 1, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniformMat2f(const std::string& name, const glm::mat2& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniformMatrix2fv(location, 1, GL_FALSE, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniformMat3f(const std::string& name, const glm::mat3& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::UploadUniformMat4f(const std::string& name, const glm::mat4& value)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
 }

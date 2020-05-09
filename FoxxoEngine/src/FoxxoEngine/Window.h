@@ -3,6 +3,7 @@
 
 #include "FoxxoEngine/Core.h"
 #include "FoxxoEngine/Event/Event.h"
+#include "FoxxoEngine/Renderer/GraphicsContext.h"
 
 namespace FoxxoEngine
 {
@@ -31,6 +32,7 @@ namespace FoxxoEngine
 		virtual bool IsVSync() const = 0;
 
 		virtual void* GetHandle() const = 0;
+		virtual GraphicsContext& GetGraphicsContext() const = 0;
 
 		static Window* Create(const WindowProps& props = WindowProps());
 	};

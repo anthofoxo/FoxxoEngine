@@ -20,6 +20,7 @@ namespace FoxxoEngine
 		inline virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		virtual void SetVSync(bool enabled) override;
 		virtual bool IsVSync() const override;
+		virtual GraphicsContext& GetGraphicsContext() const override { return *m_Context; }
 
 		inline virtual void* GetHandle() const { return m_Handle; }
 	private:
