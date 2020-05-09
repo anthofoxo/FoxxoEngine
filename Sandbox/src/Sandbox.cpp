@@ -1,5 +1,7 @@
 #include "FoxxoEngine.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
@@ -13,6 +15,8 @@ public:
 	FoxxoEngine::OrthoCamera m_Camera;
 	float m_CameraSpeed = 0.1f;
 
+	glm::vec3 m_Position = glm::vec3();
+
 	void OnAttach() override
 	{
 		std::string vertSrc = R"(
@@ -22,19 +26,22 @@ layout (location = 0) in vec3 vert_pos;
 
 uniform mat4 u_Projection;
 uniform mat4 u_View;
+uniform mat4 u_Model;
 
 void main()
 {
-	gl_Position = u_Projection * u_View * vec4(vert_pos, 1.0);
+	gl_Position = u_Projection * u_View * u_Model * vec4(vert_pos, 1.0);
 })";
 		std::string fragSrc = R"(
 #version 330 core
 
 layout (location = 0) out vec4 out_color;
 
+uniform vec4 u_Color;
+
 void main()
 {
-	out_color = vec4(1.0, 0.0, 0.0, 1.0);
+	out_color = u_Color;
 })";
 
 		m_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
@@ -103,13 +110,41 @@ void main()
 
 			m_Camera.SetPosition(pos);
 			m_Camera.SetRotation(rot);
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_J))
+				m_Position.x -= m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_L))
+				m_Position.x += m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_K))
+				m_Position.y -= m_CameraMoveSpeed;
+
+			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_I))
+				m_Position.y += m_CameraMoveSpeed;
 		}
 
-		FoxxoEngine::RenderCommand::SetClearColor({ 1, 0, 1, 1 });
+		//FoxxoEngine::RenderCommand::SetClearColor({ 1, 0, 1, 1 });
+		FoxxoEngine::RenderCommand::SetClearColor({ 0, 0, 0, 1 });
 		FoxxoEngine::RenderCommand::Clear();
 
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
 		FoxxoEngine::Renderer::BeginScene(m_Camera);
-		FoxxoEngine::Renderer::Submit(m_shader, m_vao);
+
+		for (int y = 0; y < 5; ++y)
+		{
+			for (int x = 0; x < 5; ++x)
+			{
+				glm::vec3 pos = glm::vec3(float(x), float(y), 0.0f) * 0.2f;
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position + pos) * scale;
+
+				m_shader->UploadUniform4f("u_Color", { 0.5f, 0.5f, 0.5f, 1.0f });
+
+				FoxxoEngine::Renderer::Submit(m_shader, m_vao, transform);
+			}
+		}
+
 		FoxxoEngine::Renderer::EndScene();
 	}
 

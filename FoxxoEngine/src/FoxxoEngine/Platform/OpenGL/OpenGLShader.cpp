@@ -115,4 +115,10 @@ namespace FoxxoEngine
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
+
+	void OpenGLShader::UploadUniform4f(const std::string& name, const glm::vec4& vec)
+	{
+		int location = glGetUniformLocation(m_Handle, name.c_str());
+		glUniform4fv(location, 1, glm::value_ptr(vec));
+	}
 }

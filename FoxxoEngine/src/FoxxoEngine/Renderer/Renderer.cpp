@@ -15,13 +15,14 @@ namespace FoxxoEngine
 	{
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vao)
+	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vao, const glm::mat4& transform)
 	{
 		shader->Bind();
 		shader->UploadUniformMat4f("u_Projection", s_SceneData->ProjectionMatrix);
 		shader->UploadUniformMat4f("u_View", s_SceneData->ViewMatrix);
 
 		vao->Bind();
+		shader->UploadUniformMat4f("u_Model", transform);
 		RenderCommand::DrawIndexed(vao);
 	}
 }

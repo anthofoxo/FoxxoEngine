@@ -13,6 +13,7 @@ namespace FoxxoEngine
 		virtual void Unbind() const override;
 
 		virtual void UploadUniformMat4f(const std::string& name, const glm::mat4& matrix) override;
+		virtual void UploadUniform4f(const std::string& name, const glm::vec4& vec) override;
 
 		uint32_t m_Handle;
 	};

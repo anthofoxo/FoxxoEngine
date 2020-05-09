@@ -10,7 +10,7 @@ namespace FoxxoEngine
 	{
 		static void BeginScene(OrthoCamera& camera);
 		static void EndScene();
-		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vao);
+		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vao, const glm::mat4& transform = glm::mat4(1.0f));
 
 		inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
 
