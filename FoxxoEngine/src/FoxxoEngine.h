@@ -9,6 +9,7 @@
 #include "FoxxoEngine/ImGui/ImGuiLayer.h"
 #include "FoxxoEngine/InputCodes.h"
 #include "FoxxoEngine/Renderer/Shader.h"
+#include "FoxxoEngine/Renderer/Texture.h"
 #include "FoxxoEngine/Renderer/VertexArray.h"
 #include "FoxxoEngine/Renderer/Renderer.h"
 #include "FoxxoEngine/Renderer/RendererApi.h"

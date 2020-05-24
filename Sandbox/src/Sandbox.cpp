@@ -13,10 +13,16 @@ public:
 	ExampleLayer()
 		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
 
-	FoxxoEngine::Ref<FoxxoEngine::Shader> m_shader;
-	FoxxoEngine::Ref<FoxxoEngine::VertexBuffer> m_vbo;
-	FoxxoEngine::Ref<FoxxoEngine::IndexBuffer> m_ibo;
-	FoxxoEngine::Ref<FoxxoEngine::VertexArray> m_vao;
+	FoxxoEngine::Ref<FoxxoEngine::Shader> m_quad_shader;
+	FoxxoEngine::Ref<FoxxoEngine::Shader> m_tri_shader;
+	FoxxoEngine::Ref<FoxxoEngine::Shader> m_tex_shader;
+	FoxxoEngine::Ref<FoxxoEngine::VertexBuffer> m_tri_vbo;
+	FoxxoEngine::Ref<FoxxoEngine::IndexBuffer> m_tri_ibo;
+	FoxxoEngine::Ref<FoxxoEngine::VertexArray> m_tri_vao;
+	FoxxoEngine::Ref<FoxxoEngine::VertexBuffer> m_quad_vbo;
+	FoxxoEngine::Ref<FoxxoEngine::IndexBuffer> m_quad_ibo;
+	FoxxoEngine::Ref<FoxxoEngine::VertexArray> m_quad_vao;
+	FoxxoEngine::Ref<FoxxoEngine::Texture2D> m_texture;
 	FoxxoEngine::OrthoCamera m_Camera;
 	float m_CameraSpeed = 0.1f;
 
@@ -25,7 +31,103 @@ public:
 
 	void OnAttach() override
 	{
-		std::string vertSrc = R"(
+		{
+			std::string vertSrc = R"(
+#version 330 core
+
+layout (location = 0) in vec3 vert_pos;
+layout (location = 1) in vec2 vert_texCoord;
+
+out vec2 frag_texCoord;
+
+uniform mat4 u_Projection;
+uniform mat4 u_View;
+uniform mat4 u_Model;
+
+void main()
+{
+	gl_Position = u_Projection * u_View * u_Model * vec4(vert_pos, 1.0);
+	frag_texCoord = vert_texCoord;
+})";
+			std::string fragSrc = R"(
+#version 330 core
+
+in vec2 frag_texCoord;
+
+layout (location = 0) out vec4 out_color;
+
+uniform sampler2D u_texture;
+
+void main()
+{
+	out_color = texture(u_texture, frag_texCoord);
+})";
+
+			m_tex_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
+		}
+
+		{
+			std::string vertSrc = R"(
+#version 330 core
+
+layout (location = 0) in vec3 vert_pos;
+
+out vec3 frag_color;
+
+uniform mat4 u_Projection;
+uniform mat4 u_View;
+uniform mat4 u_Model;
+
+void main()
+{
+	gl_Position = u_Projection * u_View * u_Model * vec4(vert_pos, 1.0);
+	frag_color = vert_pos * 0.5 + 0.5;
+})";
+			std::string fragSrc = R"(
+#version 330 core
+
+in vec3 frag_color;
+
+layout (location = 0) out vec4 out_color;
+
+void main()
+{
+	out_color = vec4(frag_color, 1.0);
+})";
+
+			m_tri_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
+
+			float vertices[] =
+			{
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+				0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+				0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+				-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
+			};
+
+			unsigned int indices[] =
+			{
+				0, 1, 2, 2, 3, 0
+			};
+
+			m_tri_vao.reset(FoxxoEngine::VertexArray::Create());
+
+			FoxxoEngine::BufferLayout layout = {
+				{FoxxoEngine::ShaderDataType::Float3, "position"},
+				{FoxxoEngine::ShaderDataType::Float2, "texCoord"}
+			};
+
+			m_tri_vbo.reset(FoxxoEngine::VertexBuffer::Create(vertices, sizeof(vertices)));
+			m_tri_vbo->SetLayout(layout);
+
+			m_tri_ibo.reset(FoxxoEngine::IndexBuffer::Create(indices, sizeof(indices)));
+
+			m_tri_vao->AddVertexBuffer(m_tri_vbo);
+			m_tri_vao->SetIndexBuffer(m_tri_ibo);
+		}
+
+		{
+			std::string vertSrc = R"(
 #version 330 core
 
 layout (location = 0) in vec3 vert_pos;
@@ -38,45 +140,52 @@ void main()
 {
 	gl_Position = u_Projection * u_View * u_Model * vec4(vert_pos, 1.0);
 })";
-		std::string fragSrc = R"(
+			std::string fragSrc = R"(
 #version 330 core
 
-layout (location = 0) out vec4 out_color;
-
 uniform vec3 u_Color;
+
+layout (location = 0) out vec4 out_color;
 
 void main()
 {
 	out_color = vec4(u_Color, 1.0);
 })";
 
-		m_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
+			m_quad_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
 
-		float vertices[] =
-		{
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
-		};
+			float vertices[] =
+			{
+				-0.5f, -0.5f, 0.0f,
+				0.5f, -0.5f, 0.0f,
+				0.5f, 0.5f, 0.0f,
+				-0.5f, 0.5f, 0.0f
+			};
 
-		unsigned int indices[] =
-		{
-			0, 1, 2
-		};
+			unsigned int indices[] =
+			{
+				0, 1, 2, 2, 3, 0
+			};
 
-		m_vao.reset(FoxxoEngine::VertexArray::Create());
+			m_quad_vao.reset(FoxxoEngine::VertexArray::Create());
 
-		FoxxoEngine::BufferLayout layout = {
-			{FoxxoEngine::ShaderDataType::Float3, "position"}
-		};
+			FoxxoEngine::BufferLayout layout = {
+				{FoxxoEngine::ShaderDataType::Float3, "position"}
+			};
 
-		m_vbo.reset(FoxxoEngine::VertexBuffer::Create(vertices, sizeof(vertices)));
-		m_vbo->SetLayout(layout);
+			m_quad_vbo.reset(FoxxoEngine::VertexBuffer::Create(vertices, sizeof(vertices)));
+			m_quad_vbo->SetLayout(layout);
 
-		m_ibo.reset(FoxxoEngine::IndexBuffer::Create(indices, sizeof(indices)));
+			m_quad_ibo.reset(FoxxoEngine::IndexBuffer::Create(indices, sizeof(indices)));
 
-		m_vao->AddVertexBuffer(m_vbo);
-		m_vao->SetIndexBuffer(m_ibo);
+			m_quad_vao->AddVertexBuffer(m_quad_vbo);
+			m_quad_vao->SetIndexBuffer(m_quad_ibo);
+		}
+
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->Bind();
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->UploadUniform1i("u_texture", 0);
+
+		m_texture = FoxxoEngine::Texture2D::Create("assets/textures/test.png");
 	}
 
 	void OnDetach() override
@@ -90,8 +199,6 @@ void main()
 			static float rot = 0.0f;
 
 			double deltatime = FoxxoEngine::Application::Get().GetDeltaTime();
-
-			FOXE_INFO("Frametime: {1} FPS, {0} Seconds", deltatime, int(1.f / deltatime));
 
 			float m_CameraMoveSpeed = 1.f * (float) deltatime;
 			float m_CameraRotSpeed = 10.f * (float) deltatime;
@@ -138,8 +245,8 @@ void main()
 
 		FoxxoEngine::Renderer::BeginScene(m_Camera);
 
-		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_shader)->Bind();
-		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_shader)->UploadUniform3f("u_Color", m_Color);
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_quad_shader)->Bind();
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_quad_shader)->UploadUniform3f("u_Color", m_Color);
 
 		for (int y = 0; y < 5; ++y)
 		{
@@ -148,9 +255,17 @@ void main()
 				glm::vec3 pos = glm::vec3(float(x), float(y), 0.0f) * 0.2f;
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position + pos) * scale;
 
-				FoxxoEngine::Renderer::Submit(m_shader, m_vao, transform);
+				FoxxoEngine::Renderer::Submit(m_quad_shader, m_quad_vao, transform);
 			}
 		}
+
+		//std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tri_shader)->Bind();
+		//FoxxoEngine::Renderer::Submit(m_tri_shader, m_tri_vao);
+
+		m_texture->Bind();
+
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->Bind();
+		FoxxoEngine::Renderer::Submit(m_tex_shader, m_tri_vao);
 
 		FoxxoEngine::Renderer::EndScene();
 	}
@@ -170,6 +285,12 @@ void main()
 			ss << x << ": " << y;
 			ImGui::Text(ss.str().c_str());
 		}
+
+		double deltatime = FoxxoEngine::Application::Get().GetDeltaTime();
+
+		std::stringstream ss;
+		ss << "FPS: " << int(1.f / deltatime);
+		ImGui::Text(ss.str().c_str());
 
 		ImGui::End();
 	}

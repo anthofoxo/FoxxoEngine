@@ -11,6 +11,7 @@ IncludeDir["GLFW"] = "FoxxoEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "FoxxoEngine/vendor/Glad/include"
 IncludeDir["imgui"] = "FoxxoEngine/vendor/imgui"
 IncludeDir["glm"] = "FoxxoEngine/vendor/glm"
+IncludeDir["stb"] = "FoxxoEngine/vendor/stb"
 
 group "Dependencies"
 	include "FoxxoEngine/vendor/GLFW"
@@ -35,6 +36,8 @@ project "FoxxoEngine"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb/**.h",
+		"%{prj.name}/vendor/stb/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
@@ -48,7 +51,8 @@ project "FoxxoEngine"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.imgui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}"
 	}
 
 	links
