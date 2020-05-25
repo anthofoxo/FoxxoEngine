@@ -2,10 +2,13 @@
 
 #include "FoxxoEngine/Renderer/Shader.h"
 
+typedef unsigned int GLenum;
+
 namespace FoxxoEngine
 {
 	struct OpenGLShader : public Shader
 	{
+		OpenGLShader(const std::string& filepath);
 		OpenGLShader(const std::string& vertSrc, const std::string& fragSrc);
 		virtual ~OpenGLShader();
 
@@ -25,6 +28,10 @@ namespace FoxxoEngine
 		void UploadUniformMat2f(const std::string& name, const glm::mat2& value);
 		void UploadUniformMat3f(const std::string& name, const glm::mat3& value);
 		void UploadUniformMat4f(const std::string& name, const glm::mat4& value);
+
+		std::string ReadFile(const std::string& filepath);
+		std::unordered_map<GLenum, std::string> PreProcess(const std::string& src);
+		void Compile(const std::unordered_map<GLenum, std::string>& srcs);
 
 		uint32_t m_Handle;
 	};
