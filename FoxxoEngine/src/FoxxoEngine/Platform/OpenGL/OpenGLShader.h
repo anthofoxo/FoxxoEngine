@@ -9,11 +9,13 @@ namespace FoxxoEngine
 	struct OpenGLShader : public Shader
 	{
 		OpenGLShader(const std::string& filepath);
-		OpenGLShader(const std::string& vertSrc, const std::string& fragSrc);
+		OpenGLShader(const std::string& name, const std::string& vertSrc, const std::string& fragSrc);
 		virtual ~OpenGLShader();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+
+		inline virtual const std::string& GetName() const override { return m_Name; }
 
 		void UploadUniform1f(const std::string& name, float value);
 		void UploadUniform2f(const std::string& name, const glm::vec2& value);
@@ -34,5 +36,7 @@ namespace FoxxoEngine
 		void Compile(const std::unordered_map<GLenum, std::string>& srcs);
 
 		uint32_t m_Handle;
+
+		std::string m_Name;
 	};
 }

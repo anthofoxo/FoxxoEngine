@@ -26,6 +26,13 @@ namespace FoxxoEngine
 		std::string src = ReadFile(filepath);
 		auto srcs = PreProcess(src);
 		Compile(srcs);
+
+		// Get name from filepath
+		auto lastSlash = filepath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filepath.rfind('.');
+		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		m_Name = filepath.substr(lastSlash, count);
 	}
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& src)
@@ -150,7 +157,8 @@ namespace FoxxoEngine
 		return result;
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertSrc, const std::string& fragSrc)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertSrc, const std::string& fragSrc)
+		: m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> map;
 		map[GL_VERTEX_SHADER] = vertSrc;

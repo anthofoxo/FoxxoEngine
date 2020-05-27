@@ -15,7 +15,7 @@ public:
 
 	FoxxoEngine::Ref<FoxxoEngine::Shader> m_quad_shader;
 	FoxxoEngine::Ref<FoxxoEngine::Shader> m_tri_shader;
-	FoxxoEngine::Ref<FoxxoEngine::Shader> m_tex_shader;
+	//FoxxoEngine::Ref<FoxxoEngine::Shader> m_tex_shader;
 	FoxxoEngine::Ref<FoxxoEngine::VertexBuffer> m_tri_vbo;
 	FoxxoEngine::Ref<FoxxoEngine::IndexBuffer> m_tri_ibo;
 	FoxxoEngine::Ref<FoxxoEngine::VertexArray> m_tri_vao;
@@ -29,10 +29,10 @@ public:
 	glm::vec3 m_Position = glm::vec3();
 	glm::vec3 m_Color = { 1.0f, 0.0f, 0.0f };
 
+	FoxxoEngine::ShaderLibrary m_ShaderLibrary;
+
 	void OnAttach() override
 	{
-		m_tex_shader.reset(FoxxoEngine::Shader::Create("assets/shaders/texture.glsl"));
-
 		{
 			std::string vertSrc = R"(
 #version 330 core
@@ -62,7 +62,7 @@ void main()
 	out_color = vec4(frag_color, 1.0);
 })";
 
-			m_tri_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
+			m_tri_shader = FoxxoEngine::Shader::Create("TriangleShader", vertSrc, fragSrc);
 
 			float vertices[] =
 			{
@@ -119,7 +119,7 @@ void main()
 	out_color = vec4(u_Color, 1.0);
 })";
 
-			m_quad_shader.reset(FoxxoEngine::Shader::Create(vertSrc, fragSrc));
+			m_quad_shader = FoxxoEngine::Shader::Create("QuadShader", vertSrc, fragSrc);
 
 			float vertices[] =
 			{
@@ -149,8 +149,10 @@ void main()
 			m_quad_vao->SetIndexBuffer(m_quad_ibo);
 		}
 
-		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->Bind();
-		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->UploadUniform1i("u_texture", 0);
+		auto shader = m_ShaderLibrary.Load("assets/shaders/texture.glsl");
+		//m_tex_shader = FoxxoEngine::Shader::Create("assets/shaders/texture.glsl");
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(shader)->Bind();
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(shader)->UploadUniform1i("u_texture", 0);
 
 		m_texture = FoxxoEngine::Texture2D::Create("assets/textures/test.png");
 	}
@@ -231,8 +233,10 @@ void main()
 
 		m_texture->Bind();
 
-		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->Bind();
-		FoxxoEngine::Renderer::Submit(m_tex_shader, m_tri_vao);
+		auto shader = m_ShaderLibrary.Get("texture");
+		//std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_tex_shader)->Bind();
+		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(shader)->Bind();
+		FoxxoEngine::Renderer::Submit(shader, m_tri_vao);
 
 		FoxxoEngine::Renderer::EndScene();
 	}
