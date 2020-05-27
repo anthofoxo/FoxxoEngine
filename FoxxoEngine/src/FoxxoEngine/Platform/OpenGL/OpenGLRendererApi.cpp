@@ -25,4 +25,9 @@ namespace FoxxoEngine
 	{
 		glDrawElements(GL_TRIANGLES, vao->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
+
+	void OpenGLRendererApi::SetViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h)
+	{
+		glViewport(x, y, w, h);
+	}
 }

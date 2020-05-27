@@ -15,6 +15,7 @@
 #include "FoxxoEngine/Renderer/RendererApi.h"
 #include "FoxxoEngine/Renderer/Camera.h"
 #include "FoxxoEngine/Input.h"
+#include "FoxxoEngine/Renderer/CameraController.h"
 
 // --- ENTRY POINT ---
 #include "FoxxoEngine/EntryPoint.h"

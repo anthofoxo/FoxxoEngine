@@ -9,6 +9,7 @@ namespace FoxxoEngine
 	struct Renderer
 	{
 		static void Init();
+		static void OnWindowResize(uint32_t width, uint32_t height);
 
 		static void BeginScene(OrthoCamera& camera);
 		static void EndScene();

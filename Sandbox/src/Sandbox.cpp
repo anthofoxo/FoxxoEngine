@@ -11,7 +11,7 @@ class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
+		: Layer("Example"), m_Camera(1280.0f / 720.0f, true) {}
 
 	FoxxoEngine::Ref<FoxxoEngine::Shader> m_quad_shader;
 	FoxxoEngine::Ref<FoxxoEngine::Shader> m_tri_shader;
@@ -23,8 +23,7 @@ public:
 	FoxxoEngine::Ref<FoxxoEngine::IndexBuffer> m_quad_ibo;
 	FoxxoEngine::Ref<FoxxoEngine::VertexArray> m_quad_vao;
 	FoxxoEngine::Ref<FoxxoEngine::Texture2D> m_texture;
-	FoxxoEngine::OrthoCamera m_Camera;
-	float m_CameraSpeed = 0.1f;
+	FoxxoEngine::OrthoCameraController m_Camera;
 
 	glm::vec3 m_Position = glm::vec3();
 	glm::vec3 m_Color = { 1.0f, 0.0f, 0.0f };
@@ -163,48 +162,7 @@ void main()
 
 	void OnUpdate() override
 	{
-		{
-			static glm::vec3 pos = glm::vec3();
-			static float rot = 0.0f;
-
-			double deltatime = FoxxoEngine::Application::Get().GetDeltaTime();
-
-			float m_CameraMoveSpeed = 1.f * (float) deltatime;
-			float m_CameraRotSpeed = 10.f * (float) deltatime;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_A) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_LEFT))
-				pos.x -= m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_D) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_RIGHT))
-				pos.x += m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_S) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_DOWN))
-				pos.y -= m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_W) | FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_UP))
-				pos.y += m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_Q))
-				rot += m_CameraRotSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_E))
-				rot -= m_CameraRotSpeed;
-
-			m_Camera.SetPosition(pos);
-			m_Camera.SetRotation(rot);
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_J))
-				m_Position.x -= m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_L))
-				m_Position.x += m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_K))
-				m_Position.y -= m_CameraMoveSpeed;
-
-			if (FoxxoEngine::Input::IsKeyPressed(FOXE_KEY_I))
-				m_Position.y += m_CameraMoveSpeed;
-		}
+		m_Camera.OnUpdate();
 
 		//FoxxoEngine::RenderCommand::SetClearColor({ 1, 0, 1, 1 });
 		FoxxoEngine::RenderCommand::SetClearColor({ 0, 0, 0, 1 });
@@ -212,7 +170,7 @@ void main()
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		FoxxoEngine::Renderer::BeginScene(m_Camera);
+		FoxxoEngine::Renderer::BeginScene(m_Camera.GetCamera());
 
 		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_quad_shader)->Bind();
 		std::dynamic_pointer_cast<FoxxoEngine::OpenGLShader>(m_quad_shader)->UploadUniform3f("u_Color", m_Color);
@@ -268,6 +226,7 @@ void main()
 
 	void OnEvent(FoxxoEngine::Event& e) override
 	{
+		m_Camera.OnEvent(e);
 	}
 };
 

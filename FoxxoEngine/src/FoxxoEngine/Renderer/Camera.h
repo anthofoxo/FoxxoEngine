@@ -12,6 +12,8 @@ namespace FoxxoEngine
 		inline const glm::vec3& GetPosition() const { return m_Position; }
 		inline void SetPosition(const glm::vec3& position) { m_Position = position; Recalc(); }
 
+		void SetProjection(float left, float right, float bottom, float top);
+
 		inline float GetRotation() const { return m_Rotation; }
 		inline void SetRotation(float rotation) { m_Rotation = rotation; Recalc(); }
 

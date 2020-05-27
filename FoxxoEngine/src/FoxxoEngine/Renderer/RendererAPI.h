@@ -19,6 +19,8 @@ namespace FoxxoEngine
 
 		virtual void DrawIndexed(const Ref<VertexArray>& vao) = 0;
 
+		virtual void SetViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h) = 0;
+
 		inline static Api GetApi() { return s_Api; }
 
 	private:
