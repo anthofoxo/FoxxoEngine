@@ -57,7 +57,15 @@ namespace FoxxoEngine
 		GLint status;
 		GLuint program = glCreateProgram();
 
-		std::vector<GLenum> shaders(srcs.size());
+		// std::vector<GLenum> shaders;
+		// shaders.reserve(srcs.size());
+
+		constexpr int maxShaders = 2;
+
+		FOXE_CORE_ASSERT(srcs.size() <= maxShaders, "Max shader limit {0}, {1} given", maxShaders, srcs.size());
+
+		std::array<GLenum, maxShaders> shaders;
+		int shaderIndex = 0;
 
 		for (auto&& [type, src] : srcs)
 		{
@@ -86,7 +94,8 @@ namespace FoxxoEngine
 			}
 
 			glAttachShader(program, shader);
-			shaders.push_back(shader);
+			// shaders.push_back(shader);
+			shaders[shaderIndex++] = shader;
 		}
 
 		m_Handle = program;
@@ -124,7 +133,7 @@ namespace FoxxoEngine
 	{
 		std::string result;
 
-		std::ifstream in(filepath, std::ios::in, std::ios::binary);
+		std::ifstream in(filepath, std::ios::in | std::ios::binary);
 
 		if (in)
 		{
