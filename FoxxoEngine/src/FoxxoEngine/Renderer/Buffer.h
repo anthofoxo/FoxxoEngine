@@ -92,7 +92,7 @@ namespace FoxxoEngine
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static VertexBuffer* Create(void* data, size_t size);
+		static Ref<VertexBuffer> Create(void* data, size_t size);
 	};
 
 	struct IndexBuffer
@@ -104,6 +104,6 @@ namespace FoxxoEngine
 
 		virtual int GetCount() const = 0;
 
-		static IndexBuffer* Create(void* data, size_t size);
+		static Ref<IndexBuffer> Create(void* data, size_t size);
 	};
 }
