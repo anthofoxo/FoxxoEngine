@@ -14,6 +14,8 @@ namespace FoxxoEngine
 
 	void OrthoCameraController::OnUpdate()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		float deltatime = (float) Application::Get().GetDeltaTime();
 
 		float speed = m_CameraTranslationSpeed * deltatime * m_ZoomLevel;

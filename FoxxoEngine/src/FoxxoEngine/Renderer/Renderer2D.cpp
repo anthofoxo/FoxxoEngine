@@ -22,6 +22,8 @@ namespace FoxxoEngine
 
 	void Renderer2D::Init()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		s_Data = new Renderer2DData();
 
 		float vertices[] =
@@ -59,11 +61,15 @@ namespace FoxxoEngine
 
 	void Renderer2D::Shutdown()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		delete s_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthoCamera& camera)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		FoxxoEngine::RenderCommand::SetClearColor({ 0, 0, 0, 1 });
 		FoxxoEngine::RenderCommand::Clear();
 
@@ -74,6 +80,7 @@ namespace FoxxoEngine
 
 	void Renderer2D::EndScene()
 	{
+		FOXE_PROFILE_FUNCTION();
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& color)
@@ -103,6 +110,8 @@ namespace FoxxoEngine
 
 	void Renderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const Ref<Texture2D>& texture)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glm::mat4 transform = glm::mat4(1.0f);
 		transform = glm::translate(transform, pos);
 		transform = glm::scale(transform, { size, 1.0f });

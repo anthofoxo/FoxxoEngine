@@ -29,21 +29,33 @@ namespace FoxxoEngine
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glGenVertexArrays(1, &m_Handle);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_Handle);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		glBindVertexArray(m_Handle);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		glBindVertexArray(0);
 	}
 

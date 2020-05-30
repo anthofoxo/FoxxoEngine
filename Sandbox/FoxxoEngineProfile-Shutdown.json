@@ -1,0 +1,1 @@
+{"otherData": {},"traceEvents":[{},{"cat":"function","dur":10782,"name":"void __cdecl FoxxoEngine::WindowsWindow::Shutdown(void)","ph":"X","pid":0,"tid":4244,"ts":108998319164.900}]}

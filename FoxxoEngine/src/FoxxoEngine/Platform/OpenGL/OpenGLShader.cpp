@@ -10,6 +10,8 @@ namespace FoxxoEngine
 {
 	static GLenum ShaderTypeFromString(const std::string& type)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		if (type == "vert") return GL_VERTEX_SHADER;
 		if (type == "tesc") return GL_TESS_CONTROL_SHADER;
 		if (type == "tese") return GL_TESS_EVALUATION_SHADER;
@@ -23,6 +25,8 @@ namespace FoxxoEngine
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 		: m_Handle(0)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		std::string src = ReadFile(filepath);
 		auto srcs = PreProcess(src);
 		Compile(srcs);
@@ -37,6 +41,8 @@ namespace FoxxoEngine
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& src)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string>  srcs;
 
 		const char* typeToken = "#type";
@@ -61,6 +67,8 @@ namespace FoxxoEngine
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& srcs)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		GLint status;
 		GLuint program = glCreateProgram();
 
@@ -138,6 +146,8 @@ namespace FoxxoEngine
 
 	std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		std::string result;
 
 		std::ifstream in(filepath, std::ios::in | std::ios::binary);
@@ -160,6 +170,8 @@ namespace FoxxoEngine
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertSrc, const std::string& fragSrc)
 		: m_Name(name)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> map;
 		map[GL_VERTEX_SHADER] = vertSrc;
 		map[GL_FRAGMENT_SHADER] = fragSrc;
@@ -168,81 +180,109 @@ namespace FoxxoEngine
 
 	OpenGLShader::~OpenGLShader()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		FOXE_CORE_ASSERT(m_Handle, "Shader deletion attemp, shader never created");
 		glDeleteProgram(m_Handle);
 	}
 
 	void OpenGLShader::Bind() const
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glUseProgram(m_Handle);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
 	void OpenGLShader::UploadUniform1f(const std::string& name, float value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform1f(location, value);
 	}
 
 	void OpenGLShader::UploadUniform2f(const std::string& name, const glm::vec2& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform2fv(location, 1, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniform3f(const std::string& name, const glm::vec3& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform3fv(location, 1, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniform4f(const std::string& name, const glm::vec4& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform4fv(location, 1, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniform1i(const std::string& name, int value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform1i(location, value);
 	}
 
 	void OpenGLShader::UploadUniform2i(const std::string& name, const glm::ivec2& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform2iv(location, 1, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniform3i(const std::string& name, const glm::ivec3& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform3iv(location, 1, glm::value_ptr(value));
 	}
 	void OpenGLShader::UploadUniform4i(const std::string& name, const glm::ivec4& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniform4iv(location, 1, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniformMat2f(const std::string& name, const glm::mat2& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniformMatrix2fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniformMat3f(const std::string& name, const glm::mat3& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::UploadUniformMat4f(const std::string& name, const glm::mat4& value)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int location = glGetUniformLocation(m_Handle, name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}

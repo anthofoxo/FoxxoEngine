@@ -9,6 +9,8 @@ static FoxxoEngine::Ref<FoxxoEngine::Texture2D> texture;
 
 void Sandbox2D::OnAttach()
 {
+	FOXE_PROFILE_FUNCTION();
+
 	texture = FoxxoEngine::Texture2D::Create("assets/textures/test.png");
 }
 
@@ -18,6 +20,8 @@ void Sandbox2D::OnDetach()
 
 void Sandbox2D::OnUpdate()
 {
+	FOXE_PROFILE_FUNCTION();
+
 	m_Camera.OnUpdate();
 
 	FoxxoEngine::Renderer2D::BeginScene(m_Camera.GetCamera());
@@ -31,6 +35,8 @@ void Sandbox2D::OnUpdate()
 
 void Sandbox2D::OnGuiRender()
 {
+	FOXE_PROFILE_FUNCTION();
+
 	ImGui::Begin("Render Settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	ImGui::ColorEdit4("Quad Color", glm::value_ptr(m_Color));
 	ImGui::End();

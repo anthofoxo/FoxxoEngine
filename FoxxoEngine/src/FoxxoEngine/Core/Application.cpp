@@ -16,6 +16,8 @@ namespace FoxxoEngine
 
 	Application::Application()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		FOXE_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
@@ -82,8 +84,12 @@ namespace FoxxoEngine
 
 	void Application::Run()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		while (m_Running)
 		{
+			FOXE_PROFILE_SCOPE("Runloop");
+
 			double time = glfwGetTime();
 			static double lastTime = time;
 			m_Delta = time - lastTime;
@@ -91,14 +97,21 @@ namespace FoxxoEngine
 
 			if (!m_Minimized)
 			{
+				FOXE_PROFILE_SCOPE("Layerstack update");
+
 				for (Layer* layer : m_LayerStack)
 					layer->OnUpdate();
 			}
 
 			m_ImGuiLayer->Begin();
 
-			for (Layer* layer : m_LayerStack)
-				layer->OnGuiRender();
+			{
+				FOXE_PROFILE_SCOPE("Layerstack gui update");
+
+				for (Layer* layer : m_LayerStack)
+					layer->OnGuiRender();
+			}
+
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();

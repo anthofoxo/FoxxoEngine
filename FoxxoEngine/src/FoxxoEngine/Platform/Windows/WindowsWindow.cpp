@@ -36,6 +36,8 @@ namespace FoxxoEngine
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		m_Data.m_Title = props.m_Title;
 		m_Data.m_Width = props.m_Width;
 		m_Data.m_Height = props.m_Height;
@@ -44,6 +46,7 @@ namespace FoxxoEngine
 
 		if (!s_GlfwInitialized)
 		{
+			FOXE_PROFILE_SCOPE("glfwInit");
 			// TODO: glfWTerminate on system shutdown
 			int success = glfwInit();
 			FOXE_CORE_ASSERT(success, "Failed to initalize GLFW!");
@@ -157,17 +160,23 @@ namespace FoxxoEngine
 
 	void WindowsWindow::Shutdown()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Handle);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glfwSwapInterval((m_Data.m_Vsync = enabled) ? 1 : 0);
 	}
 

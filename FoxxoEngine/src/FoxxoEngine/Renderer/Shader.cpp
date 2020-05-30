@@ -7,6 +7,8 @@ namespace FoxxoEngine
 {
 	Ref<Shader> Shader::Create(const std::string& filepath)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		switch (Renderer::GetApi())
 		{
 			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
@@ -19,6 +21,8 @@ namespace FoxxoEngine
 
 	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertSrc, const std::string& fragSrc)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		switch (Renderer::GetApi())
 		{
 			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
@@ -43,6 +47,10 @@ namespace FoxxoEngine
 
 	Ref<Shader> ShaderLibrary::Load(const std::string& filepath)
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		auto shader = Shader::Create(filepath);
 		Add(shader);
 
@@ -51,6 +59,10 @@ namespace FoxxoEngine
 
 	Ref<Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath)
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		auto shader = Shader::Create(filepath);
 		Add(shader);
 		return shader;

@@ -9,6 +9,10 @@ namespace FoxxoEngine
 	BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)
 		: m_Elements(elements)
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		uint32_t offset = 0;
 		m_Stride = 0;
 
@@ -22,6 +26,8 @@ namespace FoxxoEngine
 
 	Ref<VertexBuffer> VertexBuffer::Create(void* data, size_t size)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		switch (Renderer::GetApi())
 		{
 			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
@@ -34,6 +40,8 @@ namespace FoxxoEngine
 
 	Ref<IndexBuffer> IndexBuffer::Create(void* data, size_t size)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		switch (Renderer::GetApi())
 		{
 			case RendererApi::Api::None: FOXE_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;

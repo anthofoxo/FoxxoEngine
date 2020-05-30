@@ -15,6 +15,8 @@
 
 #include "FoxxoEngine/Core/Log.h"
 
+#include "FoxxoEngine/Debug/Instrumentor.h"
+
 #ifdef FOXE_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif

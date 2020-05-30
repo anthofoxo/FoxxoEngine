@@ -9,6 +9,8 @@ namespace FoxxoEngine
 	OpenGLTexture2D::OpenGLTexture2D(unsigned int width, unsigned int height, unsigned char* data)
 		: m_Path("null")
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		m_Width = width;
 		m_Height = height;
 
@@ -26,6 +28,8 @@ namespace FoxxoEngine
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		: m_Path(path)
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		int x, y, c;
 
 		stbi_set_flip_vertically_on_load(true);
@@ -68,11 +72,19 @@ namespace FoxxoEngine
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		glDeleteTextures(1, &m_Handle);
 	}
 
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
+#if FOXE_PROFILE_RENDER_DETAIL == 1
+		FOXE_PROFILE_FUNCTION();
+#endif
+
 		glBindTextureUnit(slot, m_Handle);
 	}
 }

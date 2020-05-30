@@ -13,6 +13,8 @@ namespace FoxxoEngine
 
 	void OpenGLContext::Init()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 		FOXE_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -30,6 +32,8 @@ namespace FoxxoEngine
 
 	void OpenGLContext::SwapBuffers()
 	{
+		FOXE_PROFILE_FUNCTION();
+
 		glfwSwapBuffers(m_Window);
 	}
 }
