@@ -18,6 +18,6 @@ namespace FoxxoEngine
 		virtual const Ref<IndexBuffer>& GetIndexBuffer() const = 0;
 		virtual void SetIndexBuffer(const Ref<IndexBuffer>& buffer) = 0;
 
-		static VertexArray* Create();
+		static Ref<VertexArray> Create();
 	};
 }

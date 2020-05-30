@@ -84,7 +84,7 @@ namespace FoxxoEngine
 
 	struct VertexBuffer
 	{
-		virtual ~VertexBuffer() {}
+		virtual ~VertexBuffer() = default;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -97,7 +97,7 @@ namespace FoxxoEngine
 
 	struct IndexBuffer
 	{
-		virtual ~IndexBuffer() {}
+		virtual ~IndexBuffer() = default;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;

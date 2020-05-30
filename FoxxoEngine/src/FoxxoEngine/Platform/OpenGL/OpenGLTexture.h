@@ -8,6 +8,7 @@ namespace FoxxoEngine
 	{
 	public:
 		OpenGLTexture2D(const std::string& path);
+		OpenGLTexture2D(unsigned int width, unsigned int height, unsigned char* data);
 		virtual ~OpenGLTexture2D();
 
 		inline virtual uint32_t GetWidth() const override { return m_Width; }

@@ -33,7 +33,7 @@ namespace FoxxoEngine
 		Bind();
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 
-		m_Count = size / sizeof(unsigned int);
+		m_Count = (unsigned int) size / sizeof(unsigned int);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()

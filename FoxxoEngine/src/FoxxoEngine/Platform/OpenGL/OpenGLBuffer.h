@@ -31,6 +31,6 @@ namespace FoxxoEngine
 
 		uint32_t m_Handle;
 		BufferLayout m_Layout;
-		int m_Count;
+		unsigned int m_Count;
 	};
 }

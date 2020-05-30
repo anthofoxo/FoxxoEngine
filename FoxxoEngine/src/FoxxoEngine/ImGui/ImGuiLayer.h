@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FoxxoEngine/Layer.h"
+#include "FoxxoEngine/Core/Layer.h"
 #include "FoxxoEngine/Event/KeyEvent.h"
 #include "FoxxoEngine/Event/MouseEvent.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"

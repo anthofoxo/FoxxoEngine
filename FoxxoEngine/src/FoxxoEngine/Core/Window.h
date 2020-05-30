@@ -1,7 +1,7 @@
 #pragma once
 #include "foxepch.h"
 
-#include "FoxxoEngine/Core.h"
+#include "FoxxoEngine/Core/Core.h"
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Renderer/GraphicsContext.h"
 

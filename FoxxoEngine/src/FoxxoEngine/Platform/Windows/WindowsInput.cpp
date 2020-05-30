@@ -1,7 +1,7 @@
 #include "foxepch.h"
 #include "WindowsInput.h"
 
-#include "FoxxoEngine/Application.h"
+#include "FoxxoEngine/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

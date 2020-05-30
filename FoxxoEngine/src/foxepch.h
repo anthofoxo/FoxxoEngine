@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "FoxxoEngine/Log.h"
+#include "FoxxoEngine/Core/Log.h"
 
 #ifdef FOXE_PLATFORM_WINDOWS
 #include <Windows.h>

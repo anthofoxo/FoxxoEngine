@@ -17,19 +17,19 @@ namespace FoxxoEngine
 
 		inline virtual const std::string& GetName() const override { return m_Name; }
 
-		void UploadUniform1f(const std::string& name, float value);
-		void UploadUniform2f(const std::string& name, const glm::vec2& value);
-		void UploadUniform3f(const std::string& name, const glm::vec3& value);
-		void UploadUniform4f(const std::string& name, const glm::vec4& value);
+		virtual void UploadUniform1f(const std::string& name, float value) override;
+		virtual void UploadUniform2f(const std::string& name, const glm::vec2& value) override;
+		virtual void UploadUniform3f(const std::string& name, const glm::vec3& value) override;
+		virtual void UploadUniform4f(const std::string& name, const glm::vec4& value) override;
 
-		void UploadUniform1i(const std::string& name, int value);
-		void UploadUniform2i(const std::string& name, const glm::ivec2& value);
-		void UploadUniform3i(const std::string& name, const glm::ivec3& value);
-		void UploadUniform4i(const std::string& name, const glm::ivec4& value);
+		virtual void UploadUniform1i(const std::string& name, int value) override;
+		virtual void UploadUniform2i(const std::string& name, const glm::ivec2& value) override;
+		virtual void UploadUniform3i(const std::string& name, const glm::ivec3& value) override;
+		virtual void UploadUniform4i(const std::string& name, const glm::ivec4& value) override;
 
-		void UploadUniformMat2f(const std::string& name, const glm::mat2& value);
-		void UploadUniformMat3f(const std::string& name, const glm::mat3& value);
-		void UploadUniformMat4f(const std::string& name, const glm::mat4& value);
+		virtual void UploadUniformMat2f(const std::string& name, const glm::mat2& value) override;
+		virtual void UploadUniformMat3f(const std::string& name, const glm::mat3& value) override;
+		virtual void UploadUniformMat4f(const std::string& name, const glm::mat4& value) override;
 
 		std::string ReadFile(const std::string& filepath);
 		std::unordered_map<GLenum, std::string> PreProcess(const std::string& src);

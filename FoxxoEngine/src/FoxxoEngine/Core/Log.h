@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FoxxoEngine/Core.h"
+#include "FoxxoEngine/Core/Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 

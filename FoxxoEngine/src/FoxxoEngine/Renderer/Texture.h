@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FoxxoEngine/Core.h"
+#include "FoxxoEngine/Core/Core.h"
 #include <string>
 
 namespace FoxxoEngine
@@ -20,5 +20,6 @@ namespace FoxxoEngine
 	{
 	public:
 		static Ref<Texture2D> Create(const std::string& path);
+		static Ref<Texture2D> Create(unsigned int width, unsigned int height, unsigned char* data);
 	};
 }

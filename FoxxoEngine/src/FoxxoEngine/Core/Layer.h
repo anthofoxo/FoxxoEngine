@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FoxxoEngine/Core.h"
+#include "FoxxoEngine/Core/Core.h"
 #include "FoxxoEngine/Event/Event.h"
 
 namespace FoxxoEngine

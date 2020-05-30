@@ -7,6 +7,10 @@
 
 #include "imgui/imgui.h"
 
+#include "Sandbox2D.h"
+
+#include "FoxxoEngine/Core/EntryPoint.h"
+
 class ExampleLayer : public FoxxoEngine::Layer
 {
 public:
@@ -43,7 +47,7 @@ public:
 				0, 1, 2, 2, 3, 0
 			};
 
-			m_tri_vao.reset(FoxxoEngine::VertexArray::Create());
+			m_tri_vao = FoxxoEngine::VertexArray::Create();
 
 			FoxxoEngine::BufferLayout layout = {
 				{FoxxoEngine::ShaderDataType::Float3, "position"},
@@ -73,7 +77,7 @@ public:
 				0, 1, 2, 2, 3, 0
 			};
 
-			m_quad_vao.reset(FoxxoEngine::VertexArray::Create());
+			m_quad_vao = FoxxoEngine::VertexArray::Create();
 
 			FoxxoEngine::BufferLayout layout = {
 				{FoxxoEngine::ShaderDataType::Float3, "position"}
@@ -122,7 +126,7 @@ public:
 			{
 				for (int x = 0; x < 5; ++x)
 				{
-					glm::vec3 pos = glm::vec3(float(x), float(y), 0.0f) * 0.2f;
+					glm::vec3 pos = glm::vec3(x, y, 0.0f) * 0.2f;
 					glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position + pos) * scale;
 
 					FoxxoEngine::Renderer::Submit(shader, m_quad_vao, transform);
@@ -177,7 +181,8 @@ class Sandbox : public FoxxoEngine::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		// PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()

@@ -9,7 +9,7 @@
 #include "examples/imgui_impl_glfw.h"
 #include "imgui.h"
 
-#include "FoxxoEngine/Application.h"
+#include "FoxxoEngine/Core/Application.h"
 
 namespace FoxxoEngine
 {

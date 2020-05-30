@@ -3,7 +3,7 @@
 
 #include "FoxxoEngine/Event/Event.h"
 #include "FoxxoEngine/Event/ApplicationEvent.h"
-#include "FoxxoEngine/Input.h"
+#include "FoxxoEngine/Core/Input.h"
 #include "FoxxoEngine/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>

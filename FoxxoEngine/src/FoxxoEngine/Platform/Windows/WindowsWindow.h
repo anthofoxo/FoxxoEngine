@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include "FoxxoEngine/Window.h"
+#include "FoxxoEngine/Core/Window.h"
 #include "FoxxoEngine/Renderer/GraphicsContext.h"
 
 namespace FoxxoEngine

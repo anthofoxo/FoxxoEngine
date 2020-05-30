@@ -6,6 +6,23 @@
 
 namespace FoxxoEngine
 {
+	OpenGLTexture2D::OpenGLTexture2D(unsigned int width, unsigned int height, unsigned char* data)
+		: m_Path("null")
+	{
+		m_Width = width;
+		m_Height = height;
+
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_Handle);
+		glTextureStorage2D(m_Handle, 1, GL_RGBA8, m_Width, m_Height);
+
+		glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_Handle, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTextureSubImage2D(m_Handle, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	}
+
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		: m_Path(path)
 	{
@@ -41,8 +58,8 @@ namespace FoxxoEngine
 
 		glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(m_Handle, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glTextureSubImage2D(m_Handle, 0, 0, 0, m_Width, m_Height, format, GL_UNSIGNED_BYTE, data);
 

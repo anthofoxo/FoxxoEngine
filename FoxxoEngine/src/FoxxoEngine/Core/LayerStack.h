@@ -1,7 +1,7 @@
 #pragma once
 
 #include "foxepch.h"
-#include "FoxxoEngine/Core.h"
+#include "FoxxoEngine/Core/Core.h"
 #include "Layer.h"
 
 namespace FoxxoEngine

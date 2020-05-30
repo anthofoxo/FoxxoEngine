@@ -1,9 +1,9 @@
 #include "foxepch.h"
 #include "CameraController.h"
 
-#include "FoxxoEngine/Application.h"
-#include "FoxxoEngine/Input.h"
-#include "FoxxoEngine/InputCodes.h"
+#include "FoxxoEngine/Core/Application.h"
+#include "FoxxoEngine/Core/Input.h"
+#include "FoxxoEngine/Core/InputCodes.h"
 
 namespace FoxxoEngine
 {
